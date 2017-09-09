@@ -1,15 +1,16 @@
-var map = '';
 
 function MapGenerator() {
 
-    this.caseWidth  = 40;
-    this.caseHeight  = 40;
+    this.caseWidth  = 50;
+    this.caseHeight  = 50;
 
-    this.map1 = [
+    this.mapCurrent = [];
+
+    this.maps = [[],[
         [1,1,1,1,1,1,1,1,1,1,1,1,1],
         [1,2,2,2,2,2,2,2,2,2,2,2,1],
         [1,2,2,2,2,2,2,2,2,2,2,2,1],
-        [1,2,2,4,4,4,4,2,2,2,1,1,1],
+        [1,2,2,4,2.4,4,4,2,2,2,1,1,1],
         [1,2,2,4,4,4,4,2,2,2,2,2,1],
         [1,2,2,4,4,4,4,2,2,2,2,2,1],
         [1,2,2,2,2,2,2,2,2,2,2,2,1],
@@ -18,15 +19,42 @@ function MapGenerator() {
         [1,2,2,2,2,4,4,4,4,4,2,2,1],
         [1,2,2,2,2,2,2,2,2,2,2,2,1],
         [1,1,1,1,1,1,1,1,1,1,1,1,1]
-    ];
+    ],[
+        [1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,2,2,2,2,2,2,2,2,2,2,2,1],
+        [1,1,2,2,2,4,4,4,2,2,2,2,1],
+        [1,1,2,2,2,4,4,4,2,2,2,2,1],
+        [1,2,2,2,2,4,4,4,2,2,2,2,1],
+        [1,2,2,2,2,4,4,2,2,2,2,2,1],
+        [1,2,2,2,2,2,2,2,2,2,2,2,1],
+        [2.1,2,2,2,2,2,2,2,2,2,2,2,1],
+        [1,2,2,2,2,2,2,2,1,2,2,2,1],
+        [1,2,2,2,2,1,1,1,1,2,2,2,1],
+        [1,2,2,2,2,1,0,0,1,2,2,2,1],
+        [1,1,1,1,1,1,0,0,1,1,1,1,1]
+    ],[
+        [0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,4,4,2.1,4,4,4,4,4,4,4,0,0],
+        [0,4,2,2,2,4,2,2,2,2,4,0,0],
+        [0,4,2,2,2,2,2,2,2,2,4,0,0],
+        [0,4,2,2,2,4,2,2,2,2,4,0,0],
+        [0,4,4,4,4,4,4,4,4,4,4,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ]];
+
 
     this.display = function () {
         noStroke();
         //stroke(30);
-        for (i=0;i < this.map1.length; i++) {
-            for (j=0; j < this.map1[i].length; j++) {
+        for (i=0;i < this.mapCurrent.length; i++) {
+            for (j=0; j < this.mapCurrent[i].length; j++) {
                 fill(255);
-                switch(this.map1[i][j]) {
+                switch(this.mapCurrent[i][j]) {
                     case 1:
                         fill(30,64,23);
                         rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
@@ -58,61 +86,43 @@ function MapGenerator() {
         }
 
     };
-}
 
+    this.changeMap = function (id,oldId,direction) {
+        loading = true;
+        var int = id;
+        var float = Math.floor(id);
+        var newId = Math.floor((int - float)*10);
+        this.mapCurrent = [];
+        this.mapCurrent = this.maps[[newId]];
 
-function detectWall(obj,direction) {
-    switch (direction) {
-        case 'left':
-            var posX = (obj.x-1) / map.caseWidth; // left
-            var mapX = Math.floor(posX);
-            var posY = (obj.y) / map.caseHeight;
-            var posYB = (obj.y+obj.h) / map.caseHeight;
-            var mapY = Math.floor(posY);
-            var mapYB = Math.floor(posYB);
-            var mapValue = Math.floor(map.map1[mapY][mapX]);
-            var mapValueB = Math.floor(map.map1[mapYB][mapX]);
-            if(mapValue==2 && mapValueB==2)
-                return true;
-            break;
-        case 'right':
-            var posX = (obj.x+obj.w+1) / map.caseWidth; // right
-            var mapX = Math.floor(posX);
-            var posY = (obj.y) / map.caseHeight;
-            var posYB = (obj.y+obj.h) / map.caseHeight;
-            var mapY = Math.floor(posY);
-            var mapYB = Math.floor(posYB);
-            var mapValue = Math.floor(map.map1[mapY][mapX]);
-            var mapValueB = Math.floor(map.map1[mapYB][mapX]);
-            if(mapValue==2 && mapValueB==2)
-                return true;
-            break;
-        case 'up':
-            var posX = (obj.x) / map.caseWidth;
-            var mapX = Math.floor(posX);
-            var posXB = (obj.x+obj.w) / map.caseWidth;
-            var mapXB = Math.floor(posXB);
-            var posY = (obj.y-1) / map.caseHeight; // up
-            var mapY = Math.floor(posY);
-            var mapValue = Math.floor(map.map1[mapY][mapX]);
-            var mapValueB = Math.floor(map.map1[mapY][mapXB]);
-            if(mapValue==2 && mapValueB==2)
-                return true;
-            break;
-        case 'down':
-            var posX = (obj.x) / map.caseWidth;
-            var mapX = Math.floor(posX);
-            var posXB = (obj.x+obj.w) / map.caseWidth;
-            var mapXB = Math.floor(posXB);
-            var posY = (obj.y+obj.h+1) / map.caseHeight; // down
-            var mapY = Math.floor(posY);
-            var mapValue = Math.floor(map.map1[mapY][mapX]);
-            var mapValueB =Math.floor( map.map1[mapY][mapXB]);
-            if(mapValue==2 && mapValueB==2)
-                return true;
-            break;
-        default:
-            return false;
+        for (i=0;i < this.mapCurrent.length; i++) {
+            for (j=0; j < this.mapCurrent[i].length; j++) {
+                if(this.mapCurrent[i][j] == oldId) {
+                    var x = j;
+                    var y = i;
+                    switch (direction) {
+                        case 'left':
+                            x=j-1;
+                            break;
+                        case 'right':
+                            x=j+1;
+                            break;
+                        case 'up':
+                            y=i-1;
+                            break;
+                        case 'down':
+                            y=i+1;
+                            break;
+                    }
+                    bob.x = x*map.caseWidth+10;
+                    bob.y = y*map.caseHeight+10;
+                }
+            }
+        }
+        mapCurrentId = int;
     }
 }
+
+
+
 
