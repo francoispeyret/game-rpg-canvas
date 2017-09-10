@@ -6,6 +6,14 @@ function MapGenerator() {
 
     this.mapCurrent = [];
 
+    this.entites = [[],
+      [
+        ['mechant',140,76]  ,
+        ['mechant2',240,76]  ,
+      ],
+        ['mechant3',70,126]  ,
+    ];
+
     this.maps = [[],[
         [1,1,1,1,1,1,1,1,1,1,1,1,1],
         [1,2,2,2,2,2,2,2,2,2,2,2,1],
@@ -25,7 +33,7 @@ function MapGenerator() {
         [1,1,2,2,2,4,4,4,2,2,2,2,1],
         [1,1,2,2,2,4,4,4,2,2,2,2,1],
         [1,2,2,2,2,4,4,4,2,2,2,2,1],
-        [1,2,2,2,2,4,4,2,2,2,2,2,1],
+        [1,2,2,2,2,4,4,4,2,2,2,2,1],
         [1,2,2,2,2,2,2,2,2,2,2,2,1],
         [2.1,2,2,2,2,2,2,2,2,2,2,2,1],
         [1,2,2,2,2,2,2,2,1,2,2,2,1],
@@ -58,14 +66,17 @@ function MapGenerator() {
                     case 1:
                         fill(30,64,23);
                         rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        image(tree, j*this.caseWidth,i*this.caseHeight);
                         break;
                     case 2:
-                        fill(95,77,54);
-                        rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                       // fill(95,77,54);
+                       // rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        image(grass, j*this.caseWidth,i*this.caseHeight);
                         break;
                     case 4:
-                        fill(40);
-                        rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        //fill(40);
+                        //rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        image(rock, j*this.caseWidth,i*this.caseHeight);
                         break;
                     // spawn entite
                     /*case 4:
@@ -94,33 +105,46 @@ function MapGenerator() {
         var newId = Math.floor((int - float)*10);
         this.mapCurrent = [];
         this.mapCurrent = this.maps[[newId]];
+        this.loadEntites(newId);
 
         for (i=0;i < this.mapCurrent.length; i++) {
             for (j=0; j < this.mapCurrent[i].length; j++) {
                 if(this.mapCurrent[i][j] == oldId) {
                     var x = j;
+                    var xOffset = 0;
                     var y = i;
+                    var yOffset = 0;
                     switch (direction) {
                         case 'left':
                             x=j-1;
+                            xOffset=30;
+                            yOffset=12;
                             break;
                         case 'right':
                             x=j+1;
+                            yOffset=12;
                             break;
                         case 'up':
                             y=i-1;
+                            xOffset=12;
+                            yOffset=30;
                             break;
                         case 'down':
                             y=i+1;
+                            xOffset=12;
                             break;
                     }
-                    bob.x = x*map.caseWidth+10;
-                    bob.y = y*map.caseHeight+10;
+                    bob.x = x*map.caseWidth+xOffset;
+                    bob.y = y*map.caseHeight+yOffset;
                 }
             }
         }
         mapCurrentId = int;
-    }
+    };
+
+    this.loadEntites = function (idMapToLoad) {
+        console.log(idMapToLoad);
+    };
 }
 
 

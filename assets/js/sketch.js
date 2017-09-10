@@ -1,15 +1,22 @@
-
+var bob = {};
+var map = {};
 var entites = [];
 var mapCurrentId = 2.1;
 var loading = true;
+var grass, tree, rock;
 
 function setup() {
+
+    grass = loadImage("assets/images/grass.png");
+    tree = loadImage("assets/images/tree.png");
+    rock = loadImage("assets/images/rock.png");
+
     map = new MapGenerator();
     map.mapCurrent = map.maps[1];
     bob = new Bob('joueur',75,75);
-    amechant = new Bob('mechant',140,76);
     entites.push(bob);
-    entites.push(amechant);
+    //amechant = new Bob('mechant',140,76);
+    //entites.push(amechant);
 
     var x = map.mapCurrent[[0]].length * map.caseWidth;
     var y = map.mapCurrent.length * map.caseHeight;
@@ -17,7 +24,6 @@ function setup() {
     frameRate(60);
     loading = false;
 
-    console.log();
 }
 
 function draw() {
@@ -26,10 +32,10 @@ function draw() {
     //console.log(entites);
     background(0);
     map.display();
-    var c = 0;
-    for(c=0;c<entites.length;c++) {
-        entites[c].display();
-        entites[c].update();
+    var i = 0;
+    for(i=0;i<entites.length;i++) {
+        entites[i].display();
+        entites[i].update();
     }
 
 }
@@ -49,14 +55,18 @@ function detectPos (o,d) {
         loading = false;
         return false;
     } else {
+        return false;
         //console.log('null');
     }
 }
 
 function detectEntite(obj,direction) {
-
+    if(entites.length <= 1) {
+        return true;
+    }
     switch (direction) {
         case 'left':
+            console.log('left');
             for(e=0;e<entites.length;e++) {
                 if(obj.name != entites[e].name) {
                     if(!collideRectRect(obj.x-1, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
