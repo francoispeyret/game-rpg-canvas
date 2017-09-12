@@ -12,11 +12,9 @@ function setup() {
     rock = loadImage("assets/images/rock.png");
 
     map = new MapGenerator();
-    map.mapCurrent = map.maps[1];
+    map.changeMap();
     bob = new Bob('joueur',75,75);
-    entites.push(bob);
-    //amechant = new Bob('mechant',140,76);
-    //entites.push(amechant);
+    //entites.push(new Bob('mechant',140,75));
 
     var x = map.mapCurrent[[0]].length * map.caseWidth;
     var y = map.mapCurrent.length * map.caseHeight;
@@ -27,11 +25,10 @@ function setup() {
 }
 
 function draw() {
-    //console.log('x='+entites[0].x+';y='+entites[0].y);
-    //console.log(mapCurrentId);
-    //console.log(entites);
     background(0);
     map.display();
+    bob.display();
+    bob.update();
     var i = 0;
     for(i=0;i<entites.length;i++) {
         entites[i].display();
@@ -66,7 +63,6 @@ function detectEntite(obj,direction) {
     }
     switch (direction) {
         case 'left':
-            console.log('left');
             for(e=0;e<entites.length;e++) {
                 if(obj.name != entites[e].name) {
                     if(!collideRectRect(obj.x-1, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {

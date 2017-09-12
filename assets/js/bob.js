@@ -14,7 +14,7 @@ function Bob(name,x,y) {
         // console.log('x'+this.x +' y'+this.y);
         noStroke();
         fill(255);
-        if(this.name=='mechant')
+        if(this.name=='mechant' || this.name=='mechant2')
             fill(255,0,0);
         rect(this.x,this.y,this.w,this.h);
     };

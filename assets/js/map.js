@@ -6,12 +6,15 @@ function MapGenerator() {
 
     this.mapCurrent = [];
 
-    this.entites = [[],
-      [
-        ['mechant',140,76]  ,
-        ['mechant2',240,76]  ,
-      ],
-        ['mechant3',70,126]  ,
+    this.entites = [
+        [
+            ['mechant',140,116],
+        ],[
+            ['mechant',140,76],
+            ['mechant2',240,76],
+        ], [
+            ['mechant3',440,126],
+        ]
     ];
 
     this.maps = [[],[
@@ -99,6 +102,10 @@ function MapGenerator() {
     };
 
     this.changeMap = function (id,oldId,direction) {
+        if (typeof id === 'undefined') {
+            id = 2.1;
+            oldId = 2.1;
+        }
         loading = true;
         var int = id;
         var float = Math.floor(id);
@@ -133,6 +140,10 @@ function MapGenerator() {
                             y=i+1;
                             xOffset=12;
                             break;
+                        default:
+                            yOffset=12;
+                            xOffset=12;
+                            break;
                     }
                     bob.x = x*map.caseWidth+xOffset;
                     bob.y = y*map.caseHeight+yOffset;
@@ -143,7 +154,25 @@ function MapGenerator() {
     };
 
     this.loadEntites = function (idMapToLoad) {
-        console.log(idMapToLoad);
+        if (typeof idMapToLoad === 'undefined') {
+            idMapToLoad = 1;
+        }
+        console.log(idMapToLoad-1);
+        entites = [];
+        for(i=0;i<this.entites.length;i++) {
+            for(e=0;e<this.entites[i].length;e++) {
+                if(this.entites[i][idMapToLoad-1]) {
+                    entites.push(
+                        new Bob(
+                            this.entites[i][e][0],
+                            this.entites[i][e][1],
+                            this.entites[i][e][2]
+                        )
+                    );
+                }
+            }
+        }
+        console.log(entites);
     };
 }
 
