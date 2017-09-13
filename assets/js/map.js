@@ -8,17 +8,26 @@ function MapGenerator() {
 
     this.entites = [
         [
+
+        ],[
             ['mechant',140,116],
         ],[
             ['mechant',140,76],
-            ['mechant2',240,76],
+            ['mechant2',240,60],
         ], [
-            ['mechant3',440,126],
+            ['mechant3',440,170],
+        ], [
+
+        ], [
+
         ]
     ];
 
-    this.maps = [[],[
-        [1,1,1,1,1,1,1,1,1,1,1,1,1],
+    this.maps = [
+        [
+
+    ],[
+        [1,1,1,1,2.5,1,1,1,1,1,1,1,1],
         [1,2,2,2,2,2,2,2,2,2,2,2,1],
         [1,2,2,2,2,2,2,2,2,2,2,2,1],
         [1,2,2,4,2.4,4,4,2,2,2,1,1,1],
@@ -56,7 +65,21 @@ function MapGenerator() {
         [0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0]
-    ]];
+    ],[],[
+        [1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [1,2,2,2,4,4,4,4,2,2,2,1,0],
+        [1,2,2,2,4,4,4,4,2,2,2,1,0],
+        [1,2,2,2,2,2,2,2,2,2,2,1,0],
+        [1,2,2,2,2,2,2,2,2,2,2,1,0],
+        [1,2,1,2,2,2,2,2,2,2,2,1,0],
+        [1,2,1,2,2,1,2,2,2,2,2,1,0],
+        [1,2,2,2,2,1,1,2,2,2,2,1,0],
+        [1,2,2,2,2,1,1,1,1,2,2,1,0],
+        [1,2,2,2,2,1,0,0,1,2,2,1,0],
+        [1,2,2,2,2,1,0,0,1,2,2,1,0],
+        [1,1,1,1,2.1,1,0,0,1,1,1,1,0]
+    ],
+    ];
 
 
     this.display = function () {
@@ -99,6 +122,27 @@ function MapGenerator() {
             }
         }
 
+    };
+
+    this.loadEntites = function (idMapToLoad) {
+        if (typeof idMapToLoad === 'undefined') {
+            idMapToLoad = 1;
+        }
+        entites = [];
+        for(i=0;i<this.entites[idMapToLoad].length;i++) {
+            //for(e=0;e<this.entites[i].length;e++) {
+                if(this.entites[idMapToLoad][i]) {
+                    entites.push(
+                        new Bob(
+                            this.entites[idMapToLoad][i][0],
+                            this.entites[idMapToLoad][i][1],
+                            this.entites[idMapToLoad][i][2]
+                        )
+                    );
+                }
+            //}
+        }
+        console.log(entites);
     };
 
     this.changeMap = function (id,oldId,direction) {
@@ -151,28 +195,6 @@ function MapGenerator() {
             }
         }
         mapCurrentId = int;
-    };
-
-    this.loadEntites = function (idMapToLoad) {
-        if (typeof idMapToLoad === 'undefined') {
-            idMapToLoad = 1;
-        }
-        console.log(idMapToLoad-1);
-        entites = [];
-        for(i=0;i<this.entites.length;i++) {
-            for(e=0;e<this.entites[i].length;e++) {
-                if(this.entites[i][idMapToLoad-1]) {
-                    entites.push(
-                        new Bob(
-                            this.entites[i][e][0],
-                            this.entites[i][e][1],
-                            this.entites[i][e][2]
-                        )
-                    );
-                }
-            }
-        }
-        console.log(entites);
     };
 }
 

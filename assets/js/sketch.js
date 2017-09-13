@@ -42,9 +42,6 @@ function detectPos (o,d) {
     var resultMap = detectMap(o,d);
     var resultEntites = detectEntite(o,d);
 
-    //console.log(resultMap);
-    //console.log('resultEntites/'+resultEntites);
-
     if(resultMap===2 && resultEntites) {
         return true;
     } else if (resultMap > 2 && resultMap < 3 && resultEntites) {
@@ -53,21 +50,18 @@ function detectPos (o,d) {
         return false;
     } else {
         return false;
-        //console.log('null');
     }
 }
 
 function detectEntite(obj,direction) {
-    if(entites.length <= 1) {
+    if(entites.length <= 0) {
         return true;
     }
     switch (direction) {
         case 'left':
             for(e=0;e<entites.length;e++) {
                 if(obj.name != entites[e].name) {
-                    if(!collideRectRect(obj.x-1, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
-                        return true;
-                    } else {
+                    if(collideRectRect(obj.x-1, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
                         return false;
                     }
                 }
@@ -76,9 +70,7 @@ function detectEntite(obj,direction) {
         case 'right':
             for(e=0;e<entites.length;e++) {
                 if(obj.name != entites[e].name) {
-                    if(!collideRectRect(obj.x+1, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
-                        return true;
-                    } else {
+                    if(collideRectRect(obj.x+1, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
                         return false;
                     }
                 }
@@ -87,9 +79,7 @@ function detectEntite(obj,direction) {
         case 'up':
             for(e=0;e<entites.length;e++) {
                 if(obj.name != entites[e].name) {
-                    if(!collideRectRect(obj.x, obj.y-1, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
-                        return true;
-                    } else {
+                    if(collideRectRect(obj.x, obj.y-1, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
                         return false;
                     }
                 }
@@ -98,17 +88,16 @@ function detectEntite(obj,direction) {
         case 'down':
             for(e=0;e<entites.length;e++) {
                 if(obj.name != entites[e].name) {
-                    if(!collideRectRect(obj.x, obj.y+1, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
-                        return true;
-                    } else {
+                    if(collideRectRect(obj.x, obj.y+1, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
                         return false;
                     }
                 }
             }
         break;
         default:
-            return true;
+            return false;
     }
+    return true;
 }
 
 

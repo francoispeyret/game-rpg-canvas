@@ -38,6 +38,16 @@ function Bob(name,x,y) {
 
                 }
             }
+            else if(this.name=='mechant') {
+                if(this.direction == 'up' && detectPos(this, 'up')) {
+                    this.y = this.y - 1;
+                } else { this.direction='down';}
+
+                if(this.direction == 'down' && detectPos(this, 'down')) {
+                    this.y = this.y + 1;
+                } else { this.direction='up';}
+
+            }
         }
     };
 
