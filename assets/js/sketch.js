@@ -60,29 +60,32 @@ function detectEntite(obj,direction) {
     switch (direction) {
         case 'left':
             for(e=0;e<entites.length;e++) {
-                if(obj.name != entites[e].name) {
-                    if(collideRectRect(obj.x-1, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
-                        return false;
-                    }
+                if(obj.name != entites[e].name && collideRectRect(obj.x-1, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
+                    return false;
                 }
+				if(obj.name!='joueur' && collideRectRect(obj.x-1, obj.y, obj.w, obj.h, bob.x, bob.y, bob.w, bob.h)) {
+					return false;
+				}
             }
         break;
         case 'right':
             for(e=0;e<entites.length;e++) {
-                if(obj.name != entites[e].name) {
-                    if(collideRectRect(obj.x+1, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
-                        return false;
-                    }
+                if(obj.name != entites[e].name && collideRectRect(obj.x+1, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
+                    return false;
                 }
+				if(obj.name!='joueur' && collideRectRect(obj.x+1, obj.y, obj.w, obj.h, bob.x, bob.y, bob.w, bob.h)) {
+					return false;
+				}
             }
         break;
         case 'up':
             for(e=0;e<entites.length;e++) {
-                if(obj.name != entites[e].name) {
-                    if(collideRectRect(obj.x, obj.y-1, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
-                        return false;
-                    }
+                if(obj.name != entites[e].name && collideRectRect(obj.x, obj.y-1, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
+                    return false;
                 }
+				if(obj.name!='joueur' && collideRectRect(obj.x, obj.y-1, obj.w, obj.h, bob.x, bob.y, bob.w, bob.h)) {
+					return false;
+				}
             }
         break;
         case 'down':
@@ -92,6 +95,9 @@ function detectEntite(obj,direction) {
                         return false;
                     }
                 }
+				if(obj.name!='joueur' && collideRectRect(obj.x, obj.y+1, obj.w, obj.h, bob.x, bob.y, bob.w, bob.h)) {
+					return false;
+				}
             }
         break;
         default:
