@@ -10,7 +10,7 @@ function MapGenerator() {
         [
 
         ],[
-            ['mechant',140,116],
+            ['mechant',140,96],
         ],[
             ['mechant',140,76],
             ['mechant2',240,60],
@@ -130,19 +130,16 @@ function MapGenerator() {
         }
         entites = [];
         for(i=0;i<this.entites[idMapToLoad].length;i++) {
-            //for(e=0;e<this.entites[i].length;e++) {
-                if(this.entites[idMapToLoad][i]) {
-                    entites.push(
-                        new Bob(
-                            this.entites[idMapToLoad][i][0],
-                            this.entites[idMapToLoad][i][1],
-                            this.entites[idMapToLoad][i][2]
-                        )
-                    );
-                }
-            //}
+            if(this.entites[idMapToLoad][i]) {
+                entites.push(
+                    new Bob(
+                        this.entites[idMapToLoad][i][0],
+                        this.entites[idMapToLoad][i][1],
+                        this.entites[idMapToLoad][i][2]
+                    )
+                );
+            }
         }
-        console.log(entites);
     };
 
     this.changeMap = function (id,oldId,direction) {

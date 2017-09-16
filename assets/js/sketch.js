@@ -3,17 +3,33 @@ var map = {};
 var entites = [];
 var mapCurrentId = 2.1;
 var loading = true;
-var grass, tree, rock;
+var grass, tree, rock, bobimage;
 
-function setup() {
+function preload() {
 
     grass = loadImage("assets/images/grass.png");
     tree = loadImage("assets/images/tree.png");
     rock = loadImage("assets/images/rock.png");
+    bobimage = {
+        down1: loadImage("assets/images/bob-down-1.png"),
+        down2: loadImage("assets/images/bob-down-2.png"),
+        down3: loadImage("assets/images/bob-down-3.png"),
+        down4: loadImage("assets/images/bob-down-4.png"),
+        up1: loadImage("assets/images/bob-up-1.png"),
+        up2: loadImage("assets/images/bob-up-2.png"),
+        right1: loadImage("assets/images/bob-right-1.png"),
+        right2: loadImage("assets/images/bob-right-2.png"),
+        left1: loadImage("assets/images/bob-left-1.png"),
+        left2: loadImage("assets/images/bob-left-2.png"),
+    };
+
+}
+
+function setup() {
 
     map = new MapGenerator();
     map.changeMap();
-    bob = new Bob('joueur',75,75);
+    bob = new Bob('joueur',75,355);
     //entites.push(new Bob('mechant',140,75));
 
     var x = map.mapCurrent[[0]].length * map.caseWidth;
@@ -35,6 +51,12 @@ function draw() {
         entites[i].update();
     }
 
+}
+
+function keyReleased() {
+    if (keyCode == UP_ARROW || keyCode == DOWN_ARROW || keyCode == RIGHT_ARROW || keyCode == LEFT_ARROW) {
+        bob.marcheStatus=false;
+    }
 }
 
 
@@ -159,3 +181,16 @@ function detectMap(obj,direction) {
             break;
     }
 }
+/*
+var test = 0;
+
+setInterval(function () {
+    var hehe = test/30;
+    if(hehe%2 == 0) {
+        console.log(hehe+'->pair');
+    } else {
+        console.log(hehe+'->impair');
+    }
+    test = test + 1;
+},1100);$
+*/
