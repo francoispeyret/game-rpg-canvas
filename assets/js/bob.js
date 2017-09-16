@@ -1,5 +1,7 @@
 
 function Bob(name,x,y) {
+    this.id = entiteIdGlobal+1;
+    entiteIdGlobal++;
     this.name = name;
     if(this.name===undefined)
         this.name = 'entite';
@@ -11,6 +13,9 @@ function Bob(name,x,y) {
     this.direction = 'down';
     this.deplacement = 0;
     this.marcheStatus = false;
+    this.vie = 100;
+    this.vieMax = 100;
+    this.attackIncrement = 0;
 
     this.display = function () {
         noStroke();
@@ -49,11 +54,44 @@ function Bob(name,x,y) {
             }
 
         } else {
-            fill(255);
+           // fill(255);
             if(this.name=='mechant' || this.name=='mechant2')
                 fill(30,30,190);
             rect(this.x,this.y,this.w,this.h);
         }
+
+        // barre de vie
+        fill(0);
+        stroke(255,0,0);
+        rect(this.x,this.y-20,31,5);
+        noStroke();
+        fill(230,0,0);
+        rect(this.x+1,this.y-19,map(this.vie,0,this.vieMax,0,30),4);
+        // \\ bare de vie
+
+        if(this.attackIncrement > 0) {
+
+            noFill();
+            stroke(255,0,0);
+
+            switch (this.direction) {
+                case 'down':
+                    rect(this.x,this.y+30,30,30);
+                    break;
+                case 'up':
+                    rect(this.x,this.y-30,30,30);
+                    break;
+                case 'right':
+                    rect(this.x+30,this.y,30,30);
+                    break;
+                case 'left':
+                    rect(this.x-30,this.y,30,30);
+                    break;
+            }
+
+            this.attackIncrement--;
+        }
+
     };
 
     this.update = function () {
@@ -107,6 +145,15 @@ function Bob(name,x,y) {
     this.marche = function() {
         if(round(this.deplacement/18)%2==0) {return 1;}
         else {return 2;}
-    }
+    };
+
+    this.attack = function () {
+        this.attackIncrement = 10;
+        if(typeof detectEntite(this,this.direction,30) === 'object') {
+            var cible = detectEntite(this,this.direction,30);
+            cible.vie -= 25;
+        }
+
+    };
 
 }

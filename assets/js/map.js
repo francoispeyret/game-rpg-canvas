@@ -11,6 +11,7 @@ function MapGenerator() {
 
         ],[
             ['mechant',140,96],
+            ['mechant2',155,355],
         ],[
             ['mechant',140,76],
             ['mechant2',240,60],
@@ -115,7 +116,7 @@ function MapGenerator() {
                         break;
                         */
                     default:
-                        fill(0);
+                        fill(20);
                         rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
                 }
 
@@ -186,8 +187,8 @@ function MapGenerator() {
                             xOffset=12;
                             break;
                     }
-                    bob.x = x*map.caseWidth+xOffset;
-                    bob.y = y*map.caseHeight+yOffset;
+                    bob.x = x*mapping.caseWidth+xOffset;
+                    bob.y = y*mapping.caseHeight+yOffset;
                 }
             }
         }
