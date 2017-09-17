@@ -24,6 +24,10 @@ function Bob(name,x,y) {
                 case 'down':
                     if(this.marche()==1 || this.marcheStatus==false) {
                         image(bobimage.down1, this.x-10,this.y-17,50,50);
+                    } else if(this.marche()==2 || this.marcheStatus==false) {
+                        image(bobimage.down2, this.x-10,this.y-17,50,50);
+                    } else if(this.marche()==3 || this.marcheStatus==false) {
+                        image(bobimage.down3, this.x-10,this.y-17,50,50);
                     } else {
                         image(bobimage.down4, this.x-10,this.y-17,50,50);
                     }
@@ -31,22 +35,34 @@ function Bob(name,x,y) {
                 case 'up':
                     if(this.marche()==1 || this.marcheStatus==false) {
                         image(bobimage.up1, this.x-10,this.y-17,50,50);
-                    } else {
+                    } else if(this.marche()==2 || this.marcheStatus==false) {
                         image(bobimage.up2, this.x-10,this.y-17,50,50);
+                    } else if(this.marche()==3 || this.marcheStatus==false) {
+                        image(bobimage.up3, this.x-10,this.y-17,50,50);
+                    } else {
+                        image(bobimage.up4, this.x-10,this.y-17,50,50);
                     }
                     break;
                 case 'right':
                     if(this.marche()==1 || this.marcheStatus==false) {
                         image(bobimage.right1, this.x-10,this.y-17,50,50);
-                    } else {
+                    } else if(this.marche()==2 && this.marcheStatus==true) {
                         image(bobimage.right2, this.x-10,this.y-17,50,50);
+                    } else if(this.marche()==3 && this.marcheStatus==true) {
+                        image(bobimage.right3, this.x-10,this.y-17,50,50);
+                    } else if(this.marcheStatus==true) {
+                        image(bobimage.right4, this.x-10,this.y-17,50,50);
                     }
                     break;
                 case 'left':
                     if(this.marche()==1 || this.marcheStatus==false) {
                         image(bobimage.left1, this.x-10,this.y-17,50,50);
-                    } else {
+                    } else if(this.marche()==2 && this.marcheStatus==true) {
                         image(bobimage.left2, this.x-10,this.y-17,50,50);
+                    } else if(this.marche()==3 && this.marcheStatus==true) {
+                        image(bobimage.left3, this.x-10,this.y-17,50,50);
+                    } else if(this.marcheStatus==true){
+                        image(bobimage.left4, this.x-10,this.y-17,50,50);
                     }
                     break;
                 default:
@@ -143,8 +159,11 @@ function Bob(name,x,y) {
     };
 
     this.marche = function() {
-        if(round(this.deplacement/18)%2==0) {return 1;}
-        else {return 2;}
+        var cycle = 16;
+        if(round(this.deplacement/cycle)%4==0) {return 1;}
+        else if(round(this.deplacement/cycle)%4==1) {return 2;}
+        else if(round(this.deplacement/cycle)%4==2) {return 3;}
+        else if(round(this.deplacement/cycle)%4==3) {return 4;}
     };
 
     this.attack = function () {

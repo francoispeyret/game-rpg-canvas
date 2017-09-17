@@ -18,10 +18,16 @@ function preload() {
         down4: loadImage("assets/images/bob-down-4.png"),
         up1: loadImage("assets/images/bob-up-1.png"),
         up2: loadImage("assets/images/bob-up-2.png"),
+        up3: loadImage("assets/images/bob-up-3.png"),
+        up4: loadImage("assets/images/bob-up-4.png"),
         right1: loadImage("assets/images/bob-right-1.png"),
         right2: loadImage("assets/images/bob-right-2.png"),
+        right3: loadImage("assets/images/bob-right-3.png"),
+        right4: loadImage("assets/images/bob-right-4.png"),
         left1: loadImage("assets/images/bob-left-1.png"),
         left2: loadImage("assets/images/bob-left-2.png"),
+        left3: loadImage("assets/images/bob-left-3.png"),
+        left4: loadImage("assets/images/bob-left-4.png"),
     };
 
 }
@@ -82,6 +88,7 @@ function detectPos (o,d) {
         loading = false;
         return false;
     } else {
+        bob.marcheStatus=false;
         return false;
     }
 }
