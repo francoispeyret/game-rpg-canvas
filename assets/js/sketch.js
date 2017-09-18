@@ -6,11 +6,13 @@ var mapCurrentId = 2.1;
 var loading = true;
 var grass, tree, rock, bobimage;
 
+// chargement des assets
 function preload() {
 
     grass = loadImage("assets/images/grass.png");
     tree = loadImage("assets/images/tree.png");
     rock = loadImage("assets/images/rock.png");
+    // sprite du joueur
     bobimage = {
         down1: loadImage("assets/images/bob-down-1.png"),
         down2: loadImage("assets/images/bob-down-2.png"),
@@ -37,6 +39,7 @@ function setup() {
     mapping = new MapGenerator();
     mapping.changeMap();
     bob = new Bob('joueur',75,355);
+    entites.push(bob);
     //entites.push(new Bob('mechant',140,75));
 
     var x = mapping.mapCurrent[[0]].length * mapping.caseWidth;
@@ -50,8 +53,8 @@ function setup() {
 function draw() {
     background(255,0,0);
     mapping.display();
-    bob.display();
-    bob.update();
+    entites.sort(sortForDisplay);
+
     var i = 0;
     for(i=0;i<entites.length;i++) {
         if(entites[i].vie>0) {
@@ -63,6 +66,15 @@ function draw() {
         }
     }
 
+}
+
+// tri pour afficher selont la position en y
+function sortForDisplay(a,b) {
+    if (a.y < b.y)
+        return -1;
+    if (a.y > b.y)
+        return 1;
+    return 0;
 }
 
 function keyReleased() {
@@ -77,6 +89,7 @@ function keyPressed() {
 }
 
 
+// detection des obstacles ou des interection avec la map et les entites
 function detectPos (o,d) {
     var resultMap = detectMap(o,d);
     var resultEntites = detectEntite(o,d);
@@ -93,6 +106,7 @@ function detectPos (o,d) {
     }
 }
 
+// detection des entietes selont la direction et la distance
 function detectEntite(obj,direction,distance) {
     if(distance===undefined)
         distance = 1;
@@ -146,7 +160,7 @@ function detectEntite(obj,direction,distance) {
     return true;
 }
 
-
+// detection des elements de la map : retourne la valeur de la case pour identifié l'action donné
 function detectMap(obj,direction) {
     switch (direction) {
         case 'left':
@@ -199,16 +213,3 @@ function detectMap(obj,direction) {
             break;
     }
 }
-/*
-var test = 0;
-
-setInterval(function () {
-    var hehe = test/30;
-    if(hehe%2 == 0) {
-        console.log(hehe+'->pair');
-    } else {
-        console.log(hehe+'->impair');
-    }
-    test = test + 1;
-},1100);$
-*/

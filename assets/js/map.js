@@ -10,8 +10,8 @@ function MapGenerator() {
         [
 
         ],[
-            ['mechant',140,96],
-            ['mechant2',155,355],
+            ['mechant2',140,396],
+            ['mechant2',185,475],
         ],[
             ['mechant',140,76],
             ['mechant2',240,60],
