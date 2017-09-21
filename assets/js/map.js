@@ -129,7 +129,12 @@ function MapGenerator() {
         if (typeof idMapToLoad === 'undefined') {
             idMapToLoad = 1;
         }
-        entites = [];
+        for(i=entites.length-1;i>=0;i--) {
+            if(entites[i].name!='joueur') {
+                var index = entites.indexOf(entites[i]);
+                entites.splice(index, 1);
+            }
+        }
         for(i=0;i<this.entites[idMapToLoad].length;i++) {
             if(this.entites[idMapToLoad][i]) {
                 entites.push(

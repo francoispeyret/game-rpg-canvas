@@ -15,10 +15,34 @@ function Bob(name,x,y) {
     this.marcheStatus = false;
     this.vie = 100;
     this.vieMax = 100;
-    this.attackIncrement = 0;
+    this.showPV = 0;
+    this.showAttack = 0;
 
     this.display = function () {
+
+        if(this.showAttack > 0) {
+            noStroke();
+            fill(255, 0, 0);
+
+            switch (this.direction) {
+                case 'down':
+                    rect(this.x, this.y + 30, 30, 30);
+                    break;
+                case 'up':
+                    rect(this.x, this.y - 30, 30, 30);
+                    break;
+                case 'right':
+                    rect(this.x + 30, this.y, 30, 30);
+                    break;
+                case 'left':
+                    rect(this.x - 30, this.y, 30, 30);
+                    break;
+            }
+            this.showAttack--;
+        }
+
         noStroke();
+        noFill();
         if(this.name=='joueur' || this.name=='mechant' || this.name=='mechant2') {
             switch (this.direction) {
                 case 'down':
@@ -76,67 +100,54 @@ function Bob(name,x,y) {
             rect(this.x,this.y,this.w,this.h);
         }
 
-        // barre de vie
-        fill(0);
-        stroke(255,0,0);
-        rect(this.x,this.y-20,31,5);
-        noStroke();
-        fill(230,0,0);
-        rect(this.x+1,this.y-19,map(this.vie,0,this.vieMax,0,30),4);
-        // \\ bare de vie
-
-        if(this.attackIncrement > 0) {
-
-            noFill();
+        if(this.showPV > 0) {
+            // barre de vie
+            fill(0);
             stroke(255,0,0);
-
-            switch (this.direction) {
-                case 'down':
-                    rect(this.x,this.y+30,30,30);
-                    break;
-                case 'up':
-                    rect(this.x,this.y-30,30,30);
-                    break;
-                case 'right':
-                    rect(this.x+30,this.y,30,30);
-                    break;
-                case 'left':
-                    rect(this.x-30,this.y,30,30);
-                    break;
-            }
-
-            this.attackIncrement--;
+            rect(this.x,this.y-20,31,5);
+            noStroke();
+            fill(230,0,0);
+            rect(this.x+1,this.y-19,map(this.vie,0,this.vieMax,0,30),4);
+            // \\ bare de vie
+            this.showPV--;
         }
-
     };
 
     this.update = function () {
         if(!loading) {
             if(this.name=='joueur') {
                 for(c=0;c<=this.vitesse;c++) {
-                    if (keyIsDown(LEFT_ARROW) && detectPos(this, 'left')) {
-                        this.x = this.x - 1;
+                    if (keyIsDown(LEFT_ARROW)) {
                         this.direction = 'left';
-                        this.deplacement++;
-                        this.marcheStatus= true;
+                        if( detectPos(this, 'left')) {
+                            this.x = this.x - 1;
+                            this.deplacement++;
+                            this.marcheStatus= true;
+                        }
                     }
-                    else if (keyIsDown(RIGHT_ARROW) && detectPos(this, 'right')) {
-                        this.x = this.x + 1;
+                    else if (keyIsDown(RIGHT_ARROW)) {
                         this.direction = 'right';
-                        this.deplacement++;
-                        this.marcheStatus= true;
+                        if(detectPos(this, 'right')) {
+                            this.x = this.x + 1;
+                            this.deplacement++;
+                            this.marcheStatus= true;
+                        }
                     }
-                    else if (keyIsDown(UP_ARROW) && detectPos(this, 'up')) {
-                        this.y = this.y - 1;
+                    else if (keyIsDown(UP_ARROW)) {
                         this.direction = 'up';
-                        this.deplacement++;
-                        this.marcheStatus= true;
+                        if(detectPos(this, 'up')) {
+                            this.y = this.y - 1;
+                            this.deplacement++;
+                            this.marcheStatus= true;
+                        }
                     }
-                    else if (keyIsDown(DOWN_ARROW) && detectPos(this, 'down')) {
-                        this.y = this.y + 1;
+                    else if (keyIsDown(DOWN_ARROW)) {
                         this.direction = 'down';
-                        this.deplacement++;
-                        this.marcheStatus= true;
+                        if(detectPos(this, 'down')) {
+                            this.y = this.y + 1;
+                            this.deplacement++;
+                            this.marcheStatus= true;
+                        }
                     }
 
                 }
@@ -167,10 +178,11 @@ function Bob(name,x,y) {
     };
 
     this.attack = function () {
-        this.attackIncrement = 10;
+        this.showAttack = 10;
         if(typeof detectEntite(this,this.direction,30) === 'object') {
             var cible = detectEntite(this,this.direction,30);
             cible.vie -= 25;
+            cible.showPV = 60;
         }
 
     };

@@ -38,7 +38,7 @@ function setup() {
 
     mapping = new MapGenerator();
     mapping.changeMap();
-    bob = new Bob('joueur',75,355);
+    bob = new Bob('joueur',75,155);
     entites.push(bob);
     //entites.push(new Bob('mechant',140,75));
 
