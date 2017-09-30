@@ -1,5 +1,11 @@
-var bob = {};
+
 var mapping = {};
+var mapHeight = 12;
+var mapWidth = 12;
+var mapID = 1;
+var mapPositionX = '#1';
+var mapPositionY = '#1';
+var bob = {};
 var entites = [];
 var entiteIdGlobal = 0;
 var mapCurrentId = 2.1;
@@ -37,8 +43,9 @@ function preload() {
 function setup() {
 
     mapping = new MapGenerator();
+    mapping.createMap();
     mapping.changeMap();
-    bob = new Bob('joueur',75,155);
+    bob = new Bob('joueur',395,255);
     entites.push(bob);
     //entites.push(new Bob('mechant',140,75));
 
@@ -66,6 +73,11 @@ function draw() {
         }
     }
 
+    fill(0,0,255);
+    textSize(18);
+    text(mapPositionY, 300, 310);
+    text(mapPositionX, 300, 290);
+
 }
 
 // tri pour afficher selont la position en y
@@ -76,6 +88,15 @@ function sortForDisplay(a,b) {
         return 1;
     return 0;
 }
+
+function arraysIdentical(a, b) {
+    var i = a.length;
+    if (i != b.length) return false;
+    while (i--) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
+};
 
 function keyReleased() {
     if (keyCode == UP_ARROW || keyCode == DOWN_ARROW || keyCode == RIGHT_ARROW || keyCode == LEFT_ARROW) {
@@ -96,8 +117,8 @@ function detectPos (o,d) {
 
     if(resultMap===2 && resultEntites===true) {
         return true;
-    } else if (resultMap > 2 && resultMap < 3 && resultEntites===true) {
-        mapping.changeMap(resultMap,mapCurrentId,d);
+    } else if (typeof resultMap === 'object' && resultMap[0].substr(0,1)=='#' && resultEntites===true) {
+        mapping.changeMap(resultMap[0],resultMap[1],mapPositionY,mapPositionX,d);
         loading = false;
         return false;
     } else {
@@ -108,7 +129,7 @@ function detectPos (o,d) {
 
 // detection des entietes selont la direction et la distance
 function detectEntite(obj,direction,distance) {
-    if(distance===undefined)
+    if(distance==='undefined')
         distance = 1;
     if(entites.length <= 0) {
         return true;
@@ -160,7 +181,7 @@ function detectEntite(obj,direction,distance) {
     return true;
 }
 
-// detection des elements de la map : retourne la valeur de la case pour identifié l'action donné
+// detection des elements de la map : retourne la valeur de la case a une distance de 1px
 function detectMap(obj,direction) {
     switch (direction) {
         case 'left':

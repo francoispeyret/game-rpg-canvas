@@ -1,8 +1,8 @@
 
 function MapGenerator() {
 
-    this.caseWidth  = 50;
-    this.caseHeight  = 50;
+    this.caseWidth  = 45;
+    this.caseHeight  = 45;
 
     this.mapCurrent = [];
 
@@ -10,13 +10,13 @@ function MapGenerator() {
         [
 
         ],[
-            ['mechant2',140,396],
-            ['mechant2',185,475],
+           // ['mechant2',140,396],
+           // ['mechant2',185,475],
         ],[
-            ['mechant',140,76],
-            ['mechant2',240,60],
+           // ['mechant',140,76],
+           // ['mechant2',240,60],
         ], [
-            ['mechant3',440,170],
+           // ['mechant3',440,170],
         ], [
 
         ], [
@@ -24,7 +24,22 @@ function MapGenerator() {
         ]
     ];
 
-    this.maps = [
+    this.maps = {
+        '#1': {
+            '#1': [],
+            '#2': [],
+            '#3': [],
+            '#4': [],
+        },
+        '#2' : {
+            '#1': [],
+            '#2': [],
+            '#3': [],
+            '#4': [],
+        }
+    };
+
+    /*this.maps = [
         [
 
     ],[
@@ -80,7 +95,7 @@ function MapGenerator() {
         [1,2,2,2,2,1,0,0,1,2,2,1,0],
         [1,1,1,1,2.1,1,0,0,1,1,1,1,0]
     ],
-    ];
+    ];*/
 
 
     this.display = function () {
@@ -93,17 +108,17 @@ function MapGenerator() {
                     case 1:
                         fill(30,64,23);
                         rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
-                        image(tree, j*this.caseWidth,i*this.caseHeight);
+                        image(tree, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
                         break;
                     case 2:
                        // fill(95,77,54);
                        // rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
-                        image(grass, j*this.caseWidth,i*this.caseHeight);
+                        image(grass, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
                         break;
                     case 4:
                         //fill(40);
                         //rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
-                        image(rock, j*this.caseWidth,i*this.caseHeight);
+                        image(rock, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
                         break;
                     // spawn entite
                     /*case 4:
@@ -119,6 +134,9 @@ function MapGenerator() {
                         fill(20);
                         rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
                 }
+                fill(255,0,0);
+                textSize(14);
+                text(this.mapCurrent[i][j], j*this.caseWidth+10,(i*this.caseHeight)+23);
 
             }
         }
@@ -131,7 +149,7 @@ function MapGenerator() {
         }
         for(i=entites.length-1;i>=0;i--) {
             if(entites[i].name!='joueur') {
-                var index = entites.indexOf(entites[i]);
+                let index = entites.indexOf(entites[i]);
                 entites.splice(index, 1);
             }
         }
@@ -148,22 +166,67 @@ function MapGenerator() {
         }
     };
 
-    this.changeMap = function (id,oldId,direction) {
-        if (typeof id === 'undefined') {
-            id = 2.1;
-            oldId = 2.1;
+    this.createMap = function(y,x) {
+        //this.mapCurrent = this.maps[[idToCreate]];
+
+
+        if (typeof x === 'undefined') {
+            var x = mapPositionX;
+            var y = mapPositionY;
         }
+        //console.log('x - '+x);
+        //console.log('parseInt(x) - ' + (parseInt(x.substr(1,1))+1));
+
+        let mapG = [];
+        for(a=0;a<=mapHeight;a++) {
+            mapG[a] = [];
+            for(b=0;b<=mapWidth;b++) {
+                if(a==0 || a==mapHeight || b==0 || b==mapWidth) {
+                    if(a==Math.floor(mapHeight/2) && b==0) {
+                        mapG[a][b]=[y,'#' + (parseInt(x.substr(1,x.length))-1)];
+                    } else if (a==Math.floor(mapHeight/2) && b==mapWidth) {
+                        mapG[a][b]=[y,'#' + (parseInt(x.substr(1,x.length))+1)];
+                    } else if (a==0 && b==Math.floor(mapWidth/2)) {
+                        mapG[a][b]=['#' + (parseInt(y.substr(1,y.length))-1),x];
+                    } else if (a==mapHeight && b==Math.floor(mapWidth/2)) {
+                        //mapG[a][b]='#'+(parseInt(idToCreate)+4);
+                        mapG[a][b]=['#' + (parseInt(y.substr(1,y.length))+1),x];
+                    } else {
+                        mapG[a][b]=1;
+                    }
+                } else {
+                    mapG[a][b]=2;
+                }
+            }
+        }
+
+        mapG[Math.floor(random(2,mapHeight-2))][Math.floor(random(2,mapWidth-2))] = 4;
+        this.maps[y][x] = mapG;
+
+    };
+
+    this.changeMap = function (y, x, oldY, oldX, direction) {
         loading = true;
-        var int = id;
-        var float = Math.floor(id);
-        var newId = Math.floor((int - float)*10);
+        if (typeof x === 'undefined') {
+            x = mapPositionX;
+            y = mapPositionY;
+            oldY = '#1';
+            oldX = '#1';
+        }
+
+        if(typeof this.maps[y][x] === 'undefined' || this.maps[y][x].length == 0) {
+            this.createMap(y,x);
+        }
         this.mapCurrent = [];
-        this.mapCurrent = this.maps[[newId]];
-        this.loadEntites(newId);
+        this.mapCurrent = this.maps[y][x];
+
+        mapPositionX = x;
+        mapPositionY = y;
+
 
         for (i=0;i < this.mapCurrent.length; i++) {
             for (j=0; j < this.mapCurrent[i].length; j++) {
-                if(this.mapCurrent[i][j] == oldId) {
+                if(arraysIdentical(this.mapCurrent[i][j],[oldY,oldX])) {
                     var x = j;
                     var xOffset = 0;
                     var y = i;
@@ -197,7 +260,6 @@ function MapGenerator() {
                 }
             }
         }
-        mapCurrentId = int;
     };
 }
 
