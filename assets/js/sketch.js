@@ -1,3 +1,4 @@
+var debug = false;
 
 var mapping = {};
 var mapHeight = 12;
@@ -73,10 +74,12 @@ function draw() {
         }
     }
 
-    fill(0,0,255);
-    textSize(18);
-    text(mapPositionY, 300, 310);
-    text(mapPositionX, 300, 290);
+    if(debug) {
+        fill(0,0,255);
+        textSize(18);
+        text(mapPositionY, 300, 310);
+        text(mapPositionX, 300, 290);
+    }
 
 }
 

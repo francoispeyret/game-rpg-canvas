@@ -134,9 +134,12 @@ function MapGenerator() {
                         fill(20);
                         rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
                 }
-                fill(255,0,0);
-                textSize(14);
-                text(this.mapCurrent[i][j], j*this.caseWidth+10,(i*this.caseHeight)+23);
+
+                if(debug) {
+                    fill(255,0,0);
+                    textSize(14);
+                    text(this.mapCurrent[i][j], j*this.caseWidth+10,(i*this.caseHeight)+23);
+                }
 
             }
         }
@@ -189,7 +192,6 @@ function MapGenerator() {
                     } else if (a==0 && b==Math.floor(mapWidth/2)) {
                         mapG[a][b]=['#' + (parseInt(y.substr(1,y.length))-1),x];
                     } else if (a==mapHeight && b==Math.floor(mapWidth/2)) {
-                        //mapG[a][b]='#'+(parseInt(idToCreate)+4);
                         mapG[a][b]=['#' + (parseInt(y.substr(1,y.length))+1),x];
                     } else {
                         mapG[a][b]=1;
@@ -214,7 +216,7 @@ function MapGenerator() {
             oldX = '#1';
         }
 
-        if(typeof this.maps[y][x] === 'undefined' || this.maps[y][x].length == 0) {
+        if(typeof this.maps[y][x] === 'undefined' || this.maps[y][x].length == 0 || this.maps[y].length == 0) {
             this.createMap(y,x);
         }
         this.mapCurrent = [];
