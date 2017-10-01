@@ -1,5 +1,6 @@
 var debug = false;
 
+var ui = {};
 var mapping = {};
 var mapHeight = 12;
 var mapWidth = 12;
@@ -43,6 +44,7 @@ function preload() {
 
 function setup() {
 
+    ui  = new Interface();
     mapping = new MapGenerator();
     mapping.createMap();
     mapping.changeMap();
@@ -51,7 +53,7 @@ function setup() {
     //entites.push(new Bob('mechant',140,75));
 
     var x = mapping.mapCurrent[[0]].length * mapping.caseWidth;
-    var y = mapping.mapCurrent.length * mapping.caseHeight;
+    var y = mapping.mapCurrent.length * mapping.caseHeight + ui.interfaceHeight;
     createCanvas(x,y);
     frameRate(60);
     loading = false;
@@ -59,7 +61,9 @@ function setup() {
 }
 
 function draw() {
+    noSmooth();
     background(255,0,0);
+
     mapping.display();
     entites.sort(sortForDisplay);
 
@@ -73,6 +77,7 @@ function draw() {
             entites.splice(index, 1);
         }
     }
+    ui.display();
 
     if(debug) {
         fill(0,0,255);

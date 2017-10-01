@@ -9,14 +9,23 @@ function Bob(name,x,y) {
     this.y = y;
     this.w = 30;
     this.h = 30;
+
     this.vitesse = 1;
     this.direction = 'down';
     this.deplacement = 0;
     this.marcheStatus = false;
+    this.attackStatus = false;
+
     this.vie = 100;
     this.vieMax = 100;
     this.showPV = 0;
+    this.energie = 100;
+    this.energieMax = 100;
+    this.mana = 100;
+    this.manaMax = 100;
+
     this.showAttack = 0;
+    this.costAttack = 20;
 
     this.display = function () {
 
@@ -116,6 +125,18 @@ function Bob(name,x,y) {
     this.update = function () {
         if(!loading) {
             if(this.name=='joueur') {
+                // sprint
+                if (keyIsDown(16) && this.energie > 0 && this.marcheStatus == true) {// shift
+                    this.vitesse = 2;
+                    this.energie -= 0.3;
+                } else {
+                    this.vitesse = 1;
+                    if(this.marcheStatus == false && this.energie < this.energieMax) {
+                        this.energie += 0.15;
+                    } else if(this.energie < this.energieMax) {
+                        this.energie += 0.05;
+                    }
+                }
                 for(c=0;c<=this.vitesse;c++) {
                     if (keyIsDown(LEFT_ARROW)) {
                         this.direction = 'left';
@@ -178,11 +199,15 @@ function Bob(name,x,y) {
     };
 
     this.attack = function () {
-        this.showAttack = 10;
-        if(typeof detectEntite(this,this.direction,30) === 'object') {
-            var cible = detectEntite(this,this.direction,30);
-            cible.vie -= 25;
-            cible.showPV = 60;
+        this.attackStatus = true;
+        if(this.energie >= this.costAttack) {
+            this.energie -= this.costAttack;
+            this.showAttack = 10;
+            if(typeof detectEntite(this,this.direction,30) === 'object') {
+                var cible = detectEntite(this,this.direction,30);
+                cible.vie -= 25;
+                cible.showPV = 60;
+            }
         }
 
     };
