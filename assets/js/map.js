@@ -51,7 +51,12 @@ function MapGenerator() {
                        // rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
                         image(grass, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
                         break;
-                    case 4:
+                    case 2.1:
+                        //fill(40);
+                        //rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        image(ground, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        break;
+                    case 3:
                         //fill(40);
                         //rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
                         image(rock, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
@@ -138,7 +143,11 @@ function MapGenerator() {
             }
         }
 
-        mapG[Math.floor(random(2,mapHeight-2))][Math.floor(random(2,mapWidth-2))] = 4;
+        mapG[Math.floor(random(2,mapHeight-2))][Math.floor(random(2,mapWidth-2))] = 2.1;
+        mapG[Math.floor(random(2,mapHeight-2))][Math.floor(random(2,mapWidth-2))] = 3;
+
+
+
         if(typeof this.maps[y] == 'undefined')
             this.maps[y] = {};
         this.maps[y][x] = mapG;
@@ -179,24 +188,24 @@ function MapGenerator() {
                         case 'left':
                             x=j-1;
                             xOffset=30;
-                            yOffset=12;
+                            yOffset=8;
                             break;
                         case 'right':
                             x=j+1;
-                            yOffset=12;
+                            yOffset=8;
                             break;
                         case 'up':
                             y=i-1;
-                            xOffset=12;
+                            xOffset=8;
                             yOffset=30;
                             break;
                         case 'down':
                             y=i+1;
-                            xOffset=12;
+                            xOffset=8;
                             break;
                         default:
-                            yOffset=12;
-                            xOffset=12;
+                            yOffset=8;
+                            xOffset=8;
                             break;
                     }
                     bob.x = x*mapping.caseWidth+xOffset;

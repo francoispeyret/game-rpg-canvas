@@ -12,12 +12,15 @@ var entites = [];
 var entiteIdGlobal = 0;
 var mapCurrentId = 2.1;
 var loading = true;
-var grass, tree, rock, bobimage;
+
+// images
+var grass, ground, tree, rock, bobimage;
 
 // chargement des assets
 function preload() {
 
     grass = loadImage("assets/images/grass.png");
+    ground = loadImage("assets/images/ground.png");
     tree = loadImage("assets/images/tree.png");
     rock = loadImage("assets/images/rock.png");
     // sprite du joueur
@@ -52,8 +55,8 @@ function setup() {
     entites.push(bob);
     //entites.push(new Bob('mechant',140,75));
 
-    var x = mapping.mapCurrent[[0]].length * mapping.caseWidth;
-    var y = mapping.mapCurrent.length * mapping.caseHeight + ui.interfaceHeight;
+    var x = mapping.mapCurrent[[0]].length * mapping.caseWidth + ui.interfaceWidth;
+    var y = mapping.mapCurrent.length * mapping.caseHeight;
     createCanvas(x,y);
     frameRate(60);
     loading = false;
@@ -98,7 +101,7 @@ function sortForDisplay(a,b) {
 }
 
 function arraysIdentical(a, b) {
-    var i = a.length;
+    let i = a.length;
     if (i != b.length) return false;
     while (i--) {
         if (a[i] !== b[i]) return false;
@@ -120,10 +123,10 @@ function keyPressed() {
 
 // detection des obstacles ou des interection avec la map et les entites
 function detectPos (o,d) {
-    var resultMap = detectMap(o,d);
-    var resultEntites = detectEntite(o,d);
+    let resultMap = detectMap(o,d);
+    let resultEntites = detectEntite(o,d);
 
-    if(resultMap===2 && resultEntites===true) {
+    if(resultMap>=2 && resultMap<3  && resultEntites===true) {
         return true;
     } else if (typeof resultMap === 'object' && resultMap[0].substr(0,1)=='#' && resultEntites===true) {
         mapping.changeMap(resultMap[0],resultMap[1],mapPositionY,mapPositionX,d);
@@ -201,7 +204,7 @@ function detectMap(obj,direction) {
             var mapYB = Math.floor(posYB);
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapYB][mapX];
-            if(mapValue===mapValueB)
+            if(Math.floor(mapValue)===Math.floor(mapValueB))
                 return mapValue;
             break;
         case 'right':
@@ -213,7 +216,7 @@ function detectMap(obj,direction) {
             var mapYB = Math.floor(posYB);
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapYB][mapX];
-            if(mapValue===mapValueB)
+            if(Math.floor(mapValue)===Math.floor(mapValueB))
                 return mapValue;
             break;
         case 'up':
@@ -225,7 +228,7 @@ function detectMap(obj,direction) {
             var mapY = Math.floor(posY);
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapY][mapXB];
-            if(mapValue===mapValueB)
+            if(Math.floor(mapValue)===Math.floor(mapValueB))
                 return mapValue;
             break;
         case 'down':
@@ -237,7 +240,7 @@ function detectMap(obj,direction) {
             var mapY = Math.floor(posY);
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapY][mapXB];
-            if(mapValue===mapValueB)
+            if(Math.floor(mapValue)===Math.floor(mapValueB))
                 return mapValue;
             break;
     }
