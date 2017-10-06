@@ -27,9 +27,6 @@ function MapGenerator() {
     this.maps = {
         '#1': {
             '#1': [],
-            '#2': [],
-            '#3': [],
-            '#4': [],
         },
     };
 
@@ -143,8 +140,25 @@ function MapGenerator() {
             }
         }
 
-        mapG[Math.floor(random(2,mapHeight-2))][Math.floor(random(2,mapWidth-2))] = 2.1;
+
+        if(typeof bob === 'undefined') {
+            var joueurX = Math.floor(random(2,mapWidth-2));
+            var joueurY = Math.floor(random(2,mapHeight-2));
+            bob = new Bob('joueur',joueurX*30,joueurY*30);
+            entites.push(bob);
+            mapG[joueurY][joueurX] = 2.1;
+        }
+
+        let housePosX = Math.floor(random(2,mapWidth-2));
+        let housePosY = Math.floor(random(2,mapHeight-2));
+        mapG[housePosY][housePosX] = 2.1;
+        mapG[housePosY+1][housePosX+1] = 2.1;
+        mapG[housePosY][housePosX+1] = 2.1;
+        mapG[housePosY+1][housePosX] = 2.1;
+
+
         mapG[Math.floor(random(2,mapHeight-2))][Math.floor(random(2,mapWidth-2))] = 3;
+
 
 
 
@@ -215,7 +229,3 @@ function MapGenerator() {
         }
     };
 }
-
-
-
-

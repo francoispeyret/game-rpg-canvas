@@ -7,7 +7,7 @@ var mapWidth = 12;
 var mapID = 1;
 var mapPositionX = '#1';
 var mapPositionY = '#1';
-var bob = {};
+//var bob = {};
 var entites = [];
 var entiteIdGlobal = 0;
 var mapCurrentId = 2.1;
@@ -51,8 +51,8 @@ function setup() {
     mapping = new MapGenerator();
     mapping.createMap();
     mapping.changeMap();
-    bob = new Bob('joueur',395,255);
-    entites.push(bob);
+    //bob = new Bob('joueur',395,255);
+    //entites.push(bob);
     //entites.push(new Bob('mechant',140,75));
 
     var x = mapping.mapCurrent[[0]].length * mapping.caseWidth + ui.interfaceWidth;
@@ -70,8 +70,7 @@ function draw() {
     mapping.display();
     entites.sort(sortForDisplay);
 
-    var i = 0;
-    for(i=0;i<entites.length;i++) {
+    for(let i=0;i<entites.length;i++) {
         if(entites[i].vie>0) {
             entites[i].display();
             entites[i].update();
@@ -101,7 +100,7 @@ function sortForDisplay(a,b) {
 }
 
 function arraysIdentical(a, b) {
-    let i = a.length;
+    var i = a.length;
     if (i != b.length) return false;
     while (i--) {
         if (a[i] !== b[i]) return false;
@@ -126,7 +125,7 @@ function detectPos (o,d) {
     let resultMap = detectMap(o,d);
     let resultEntites = detectEntite(o,d);
 
-    if(resultMap>=2 && resultMap<3  && resultEntites===true) {
+    if(resultMap >= 2 && resultMap < 3  && resultEntites === true) {
         return true;
     } else if (typeof resultMap === 'object' && resultMap[0].substr(0,1)=='#' && resultEntites===true) {
         mapping.changeMap(resultMap[0],resultMap[1],mapPositionY,mapPositionX,d);
@@ -204,6 +203,8 @@ function detectMap(obj,direction) {
             var mapYB = Math.floor(posYB);
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapYB][mapX];
+            if(typeof mapValue==='object' && typeof mapValueB==='object')
+                return mapValue;
             if(Math.floor(mapValue)===Math.floor(mapValueB))
                 return mapValue;
             break;
@@ -216,6 +217,8 @@ function detectMap(obj,direction) {
             var mapYB = Math.floor(posYB);
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapYB][mapX];
+            if(typeof mapValue==='object' && typeof mapValueB==='object')
+                return mapValue;
             if(Math.floor(mapValue)===Math.floor(mapValueB))
                 return mapValue;
             break;
@@ -228,6 +231,8 @@ function detectMap(obj,direction) {
             var mapY = Math.floor(posY);
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapY][mapXB];
+            if(typeof mapValue==='object' && typeof mapValueB==='object')
+                return mapValue;
             if(Math.floor(mapValue)===Math.floor(mapValueB))
                 return mapValue;
             break;
@@ -240,8 +245,11 @@ function detectMap(obj,direction) {
             var mapY = Math.floor(posY);
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapY][mapXB];
+            if(typeof mapValue==='object' && typeof mapValueB==='object')
+                return mapValue;
             if(Math.floor(mapValue)===Math.floor(mapValueB))
                 return mapValue;
             break;
     }
+    return false;
 }
