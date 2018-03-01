@@ -70,7 +70,7 @@ function draw() {
     mapping.display();
     entites.sort(sortForDisplay);
 
-    for(let i=0;i<entites.length;i++) {
+    for(var i=0;i<entites.length;i++) {
         if(entites[i].vie>0) {
             entites[i].display();
             entites[i].update();
@@ -106,7 +106,7 @@ function arraysIdentical(a, b) {
         if (a[i] !== b[i]) return false;
     }
     return true;
-};
+}
 
 function keyReleased() {
     if (keyCode == UP_ARROW || keyCode == DOWN_ARROW || keyCode == RIGHT_ARROW || keyCode == LEFT_ARROW) {
@@ -122,8 +122,8 @@ function keyPressed() {
 
 // detection des obstacles ou des interection avec la map et les entites
 function detectPos (o,d) {
-    let resultMap = detectMap(o,d);
-    let resultEntites = detectEntite(o,d);
+    var resultMap = detectMap(o,d);
+    var resultEntites = detectEntite(o,d);
 
     if(resultMap >= 2 && resultMap < 3  && resultEntites === true) {
         return true;

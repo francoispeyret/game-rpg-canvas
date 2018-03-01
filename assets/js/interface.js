@@ -7,9 +7,9 @@ function Interface() {
 
     this.display = function () {
 
-        let x = mapping.mapCurrent.length * mapping.caseWidth;
-        let width = mapping.mapCurrent[[0]].length * mapping.caseWidth;
-        let height = mapping.mapCurrent.length * mapping.caseHeight;
+        var x = mapping.mapCurrent.length * mapping.caseWidth;
+        var width = mapping.mapCurrent[[0]].length * mapping.caseWidth;
+        var height = mapping.mapCurrent.length * mapping.caseHeight;
 
         //background
         stroke(51,47,38);
@@ -49,9 +49,9 @@ function Interface() {
     };
 
     this.displayHorizontal = function() {
-        let y = mapping.mapCurrent.length * mapping.caseHeight;
-        let width = mapping.mapCurrent[[0]].length * mapping.caseWidth;
-        let height = mapping.mapCurrent.length * mapping.caseHeight;
+        var y = mapping.mapCurrent.length * mapping.caseHeight;
+        var width = mapping.mapCurrent[[0]].length * mapping.caseWidth;
+        var height = mapping.mapCurrent.length * mapping.caseHeight;
 
         //background
         stroke(51,47,38);

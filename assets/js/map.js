@@ -90,7 +90,7 @@ function MapGenerator() {
         }
         for(i=entites.length-1;i>=0;i--) {
             if(entites[i].name!='joueur') {
-                let index = entites.indexOf(entites[i]);
+                var index = entites.indexOf(entites[i]);
                 entites.splice(index, 1);
             }
         }
@@ -118,7 +118,7 @@ function MapGenerator() {
         //console.log('x - '+x);
         //console.log('parseInt(x) - ' + (parseInt(x.substr(1,1))+1));
 
-        let mapG = [];
+        var mapG = [];
         for(a=0;a<=mapHeight;a++) {
             mapG[a] = [];
             for(b=0;b<=mapWidth;b++) {
@@ -149,8 +149,8 @@ function MapGenerator() {
             mapG[joueurY][joueurX] = 2.1;
         }
 
-        let housePosX = Math.floor(random(2,mapWidth-2));
-        let housePosY = Math.floor(random(2,mapHeight-2));
+        var housePosX = Math.floor(random(2,mapWidth-2));
+        var housePosY = Math.floor(random(2,mapHeight-2));
         mapG[housePosY][housePosX] = 2.1;
         mapG[housePosY+1][housePosX+1] = 2.1;
         mapG[housePosY][housePosX+1] = 2.1;

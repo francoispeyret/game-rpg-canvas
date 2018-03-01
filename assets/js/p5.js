@@ -193,7 +193,7 @@ function then(onFulfillment, onRejection) {
   passed `value`. It is shorthand for the following:
 
   ```javascript
-  let promise = new Promise(function(resolve, reject){
+  var promise = new Promise(function(resolve, reject){
     resolve(1);
   });
 
@@ -205,7 +205,7 @@ function then(onFulfillment, onRejection) {
   Instead of writing the above, your code now simply becomes the following:
 
   ```javascript
-  let promise = Promise.resolve(1);
+  var promise = Promise.resolve(1);
 
   promise.then(function(value){
     // value === 1
@@ -592,10 +592,10 @@ Enumerator.prototype._willSettleAt = function (promise, i) {
   Example:
 
   ```javascript
-  let promise1 = resolve(1);
-  let promise2 = resolve(2);
-  let promise3 = resolve(3);
-  let promises = [ promise1, promise2, promise3 ];
+  var promise1 = resolve(1);
+  var promise2 = resolve(2);
+  var promise3 = resolve(3);
+  var promises = [ promise1, promise2, promise3 ];
 
   Promise.all(promises).then(function(array){
     // The array here would be [ 1, 2, 3 ];
@@ -609,10 +609,10 @@ Enumerator.prototype._willSettleAt = function (promise, i) {
   Example:
 
   ```javascript
-  let promise1 = resolve(1);
-  let promise2 = reject(new Error("2"));
-  let promise3 = reject(new Error("3"));
-  let promises = [ promise1, promise2, promise3 ];
+  var promise1 = resolve(1);
+  var promise2 = reject(new Error("2"));
+  var promise3 = reject(new Error("3"));
+  var promises = [ promise1, promise2, promise3 ];
 
   Promise.all(promises).then(function(array){
     // Code here never runs because there are rejected promises!
@@ -641,13 +641,13 @@ function all(entries) {
   Example:
 
   ```javascript
-  let promise1 = new Promise(function(resolve, reject){
+  var promise1 = new Promise(function(resolve, reject){
     setTimeout(function(){
       resolve('promise 1');
     }, 200);
   });
 
-  let promise2 = new Promise(function(resolve, reject){
+  var promise2 = new Promise(function(resolve, reject){
     setTimeout(function(){
       resolve('promise 2');
     }, 100);
@@ -666,13 +666,13 @@ function all(entries) {
   promise will become rejected:
 
   ```javascript
-  let promise1 = new Promise(function(resolve, reject){
+  var promise1 = new Promise(function(resolve, reject){
     setTimeout(function(){
       resolve('promise 1');
     }, 200);
   });
 
-  let promise2 = new Promise(function(resolve, reject){
+  var promise2 = new Promise(function(resolve, reject){
     setTimeout(function(){
       reject(new Error('promise 2'));
     }, 100);
@@ -722,7 +722,7 @@ function race(entries) {
   It is shorthand for the following:
 
   ```javascript
-  let promise = new Promise(function(resolve, reject){
+  var promise = new Promise(function(resolve, reject){
     reject(new Error('WHOOPS'));
   });
 
@@ -736,7 +736,7 @@ function race(entries) {
   Instead of writing the above, your code now simply becomes the following:
 
   ```javascript
-  let promise = Promise.reject(new Error('WHOOPS'));
+  var promise = Promise.reject(new Error('WHOOPS'));
 
   promise.then(function(value){
     // Code here doesn't run because the promise is rejected!
@@ -800,7 +800,7 @@ function needsNew() {
   ------------
 
   ```js
-  let promise = new Promise(function(resolve, reject) {
+  var promise = new Promise(function(resolve, reject) {
     // on success
     resolve(value);
 
@@ -824,7 +824,7 @@ function needsNew() {
   ```js
   function getJSON(url) {
     return new Promise(function(resolve, reject){
-      let xhr = new XMLHttpRequest();
+      var xhr = new XMLHttpRequest();
 
       xhr.open('GET', url);
       xhr.onreadystatechange = handler;
@@ -981,7 +981,7 @@ Promise.prototype = {
     Synchronous Example
   
     ```javascript
-    let result;
+    var result;
   
     try {
       result = findResult();
@@ -1019,7 +1019,7 @@ Promise.prototype = {
     Synchronous Example
   
     ```javascript
-    let author, books;
+    var author, books;
   
     try {
       author = findAuthor();
@@ -1253,7 +1253,7 @@ return Promise;
 
   // export as global function
   /*
-  let local;
+  var local;
   if (typeof global !== 'undefined') {
     local = global;
   } else if (typeof self !== 'undefined') {
@@ -15727,7 +15727,7 @@ p5.Renderer2D.prototype._renderText = function(p, line, x, y, maxY) {
       this.drawingContext.fillText(line, x, y);
     }
   }
-  else { // an opentype font, let it handle the rendering
+  else { // an opentype font, var it handle the rendering
 
     this._textFont._renderPath(line, x, y, { renderer: this });
   }
@@ -20637,7 +20637,7 @@ p5.prototype.loadImage = function(path, successCallback, failureCallback) {
   };
 
   //set crossOrigin in case image is served which CORS headers
-  //this will let us draw to canvas without tainting it.
+  //this will var us draw to canvas without tainting it.
   //see https://developer.mozilla.org/en-US/docs/HTML/CORS_Enabled_Image
   // When using data-uris the file will be loaded locally
   // so we don't need to worry about crossOrigin with base64 file types
