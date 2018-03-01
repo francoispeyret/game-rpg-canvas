@@ -61,6 +61,7 @@ function Bob(name,x,y,mapX,mapY) {
                     rect(this.x - 30, this.y, 30, 30);
                     break;
             }
+            noFill();
             this.showAttack--;
         }
 
@@ -127,12 +128,14 @@ function Bob(name,x,y,mapX,mapY) {
             // barre de vie
             fill(0);
             stroke(255,0,0);
+            strokeWeight(1);
             rect(this.x,this.y-20,31,5);
             noStroke();
             fill(230,0,0);
             rect(this.x+1,this.y-19,map(this.vie,0,this.vieMax,0,30),4);
             // \\ bare de vie
             this.showPV--;
+            noFill();
         }
     };
 
@@ -146,9 +149,9 @@ function Bob(name,x,y,mapX,mapY) {
                 } else {
                     this.vitesse = 1;
                     if(this.marcheStatus == false && this.energie < this.energieMax) {
-                        this.energie += 0.15;
+                        this.energie += 0.30;
                     } else if(this.energie < this.energieMax) {
-                        this.energie += 0.05;
+                        this.energie += 0.10;
                     }
                 }
                 for(c=0;c<=this.vitesse;c++) {

@@ -138,10 +138,10 @@ function MapGenerator() {
         var rand = random(1,4);
 		for(var e = 0; e < rand; e++) {
 			var entiteName =    'mechant';
-			var entiteX =       random(40,mapWidth-40);
-			var entiteY =       random(40,mapHeight-40);
-			var entiteMapX =    '#'+x;
-			var entiteMapY =    '#'+y;
+			var entiteX =       random(40,mapWidth*30-40);
+			var entiteY =       random(40,mapHeight*30-40);
+			var entiteMapX =    x;
+			var entiteMapY =    y;
 			entites.push(new Bob(entiteName,entiteX,entiteY,entiteMapX,entiteMapY));
 		}
 
