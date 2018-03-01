@@ -1,6 +1,12 @@
 
-function Bob(name,x,y) {
+function Bob(name,x,y,mapX,mapY) {
     this.id = entiteIdGlobal+1;
+	this.mapX = mapX;
+	if(this.mapX===undefined)
+        this.mapX = 0;
+	this.mapY = mapY;
+	if(this.mapY===undefined)
+        this.mapY = 0;
     entiteIdGlobal++;
     this.name = name;
     if(this.name===undefined)
@@ -28,6 +34,14 @@ function Bob(name,x,y) {
     this.costAttack = 20;
 
     this.display = function () {
+
+        if(debug) {
+            stroke(255);
+            strokeWeight(1);
+            noFill();
+            rect(this.x, this.y, this.w, this.h);
+            noStroke();
+        }
 
         if(this.showAttack > 0) {
             noStroke();
@@ -202,7 +216,7 @@ function Bob(name,x,y) {
         this.attackStatus = true;
         if(this.energie >= this.costAttack) {
             this.energie -= this.costAttack;
-            this.showAttack = 10;
+            this.showAttack += 10;
             if(typeof detectEntite(this,this.direction,30) === 'object') {
                 var cible = detectEntite(this,this.direction,30);
                 cible.vie -= 25;

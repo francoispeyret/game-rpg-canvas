@@ -51,9 +51,16 @@ function setup() {
     mapping = new MapGenerator();
     mapping.createMap();
     mapping.changeMap();
-    //bob = new Bob('joueur',395,255);
-    //entites.push(bob);
-    //entites.push(new Bob('mechant',140,75));
+
+    for(var e = 0; e < mapping.entites['#1']['#1'].length; e++) {
+		var entiteName = mapping.entites['#1']['#1'][e][0];
+		var entiteX = mapping.entites['#1']['#1'][e][1];
+		var entiteY = mapping.entites['#1']['#1'][e][2];
+		var entiteMapX = '#1';
+		var entiteMapY = '#1';
+		entites.push(new Bob(entiteName,entiteX,entiteY,entiteMapX,entiteMapY));
+    }
+    entites.push(new Bob('mechant',140,75));
 
     var x = mapping.mapCurrent[[0]].length * mapping.caseWidth + ui.interfaceWidth;
     var y = mapping.mapCurrent.length * mapping.caseHeight;
@@ -72,8 +79,15 @@ function draw() {
 
     for(var i=0;i<entites.length;i++) {
         if(entites[i].vie>0) {
-            entites[i].display();
-            entites[i].update();
+            if(entites[i].name=='joueur') {
+				entites[i].display();
+				entites[i].update();
+            } else {
+                if(entites[i].mapX==mapPositionX && entites[i].mapY==mapPositionY) {
+					entites[i].display();
+					entites[i].update();
+                }
+            }
         } else {
             var index = entites.indexOf(entites[i]);
             entites.splice(index, 1);
