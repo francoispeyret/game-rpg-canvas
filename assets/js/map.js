@@ -9,7 +9,7 @@ function MapGenerator() {
     this.entites = {
 		'#1': {
 			'#1': [
-			    ['mechant',45,45],
+			   // ['mechant',45,45],
 			    ['mechant2',150,150],
             ],
 		},
@@ -135,15 +135,15 @@ function MapGenerator() {
         mapG[Math.floor(random(2,mapHeight-2))][Math.floor(random(2,mapWidth-2))] = 3;
 
         // ajout d'entites
-        var rand = random(1,4);
-		for(var e = 0; e < rand; e++) {
-			var entiteName =    'mechant';
-			var entiteX =       random(40,mapWidth*30-40);
-			var entiteY =       random(40,mapHeight*30-40);
-			var entiteMapX =    x;
-			var entiteMapY =    y;
-			entites.push(new Bob(entiteName,entiteX,entiteY,entiteMapX,entiteMapY));
-		}
+        // var rand = random(1,4);
+		// for(var e = 0; e < rand; e++) {
+			// var entiteName =    'mechant';
+			// var entiteX =       random(40,mapWidth*30-40);
+			// var entiteY =       random(40,mapHeight*30-40);
+			// var entiteMapX =    x;
+			// var entiteMapY =    y;
+			// entites.push(new Bob(entiteName,entiteX,entiteY,entiteMapX,entiteMapY));
+		// }
 
         if(typeof this.maps[y] == 'undefined')
             this.maps[y] = {};

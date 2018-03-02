@@ -60,7 +60,6 @@ function setup() {
 		var entiteMapY = '#1';
 		entites.push(new Bob(entiteName,entiteX,entiteY,entiteMapX,entiteMapY));
     }
-    entites.push(new Bob('mechant',140,75));
 
     var x = mapping.mapCurrent[[0]].length * mapping.caseWidth + ui.interfaceWidth;
     var y = mapping.mapCurrent.length * mapping.caseHeight;
@@ -153,11 +152,12 @@ function detectPos (o,d) {
 
 // detection des entietes selont la direction et la distance
 function detectEntite(obj,direction,distance) {
-    if(distance==='undefined')
-        distance = 1;
+    if(distance==null)
+		distance = 1;
     if(entites.length <= 0) {
         return true;
     }
+    console.log(direction);
     switch (direction) {
         case 'left':
             for(e=0;e<entites.length;e++) {
