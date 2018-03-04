@@ -70,7 +70,7 @@ function Interface() {
             noFill();
         rect(x+95,550,20,20);
         fill(90,85,77);
-        text('►',x+100,566);
+        text('▶',x+100,566);
 
         //gauche
         stroke(60,55,47);
@@ -80,7 +80,7 @@ function Interface() {
             noFill();
         rect(x+55,550,20,20);
         fill(90,85,77);
-        text('◄',x+60,566);
+        text('◀',x+60,566);
 
         //bas
         stroke(60,55,47);
