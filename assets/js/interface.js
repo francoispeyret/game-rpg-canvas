@@ -4,6 +4,11 @@ function Interface() {
     this.interfaceHeight = 100;
     this.interfaceWidth = 120;
 
+    this.spaceKeyPressed = false;
+    this.rightKeyPressed = false;
+    this.downKeyPressed = false;
+    this.leftKeyPressed = false;
+    this.topKeyPressed = false;
 
     this.display = function () {
 
@@ -44,6 +49,58 @@ function Interface() {
         fill(39, 161, 255);
         text('MANA',x+10,75);
         rect(x+10,80,bob.mana,10);
+
+        // bare espace
+        stroke(60,55,47);
+        strokeWeight(1);
+        if(this.spaceKeyPressed)
+            fill(90,85,77);
+        else
+            noFill();
+        rect(x+5,550,46,20);
+        fill(90,85,77);
+        noStroke();
+        text('SPACE',x+8,565);
+
+        //droite
+        stroke(60,55,47);
+        if(this.rightKeyPressed)
+            fill(90,85,77);
+        else
+            noFill();
+        rect(x+95,550,20,20);
+        fill(90,85,77);
+        text('►',x+100,566);
+
+        //gauche
+        stroke(60,55,47);
+        if(this.leftKeyPressed)
+            fill(90,85,77);
+        else
+            noFill();
+        rect(x+55,550,20,20);
+        fill(90,85,77);
+        text('◄',x+60,566);
+
+        //bas
+        stroke(60,55,47);
+        if(this.downKeyPressed)
+            fill(90,85,77);
+        else
+            noFill();
+        rect(x+75,550,20,20);
+        fill(90,85,77);
+        text('▼',x+80,566);
+
+        //haut
+        stroke(60,55,47);
+        if(this.topKeyPressed)
+            fill(90,85,77);
+        else
+            noFill();
+        rect(x+75,530,20,20);
+        fill(90,85,77);
+        text('▲',x+80,546);
 
 
     };
