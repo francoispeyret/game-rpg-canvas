@@ -1,6 +1,7 @@
 
 function Bob(name,x,y,mapX,mapY) {
     this.id = entiteIdGlobal+1;
+    this.type = 'personnage';
 	this.mapX = mapX;
 	if(this.mapX===undefined)
         this.mapX = 0;
@@ -215,16 +216,15 @@ function Bob(name,x,y,mapX,mapY) {
         else if(round(this.deplacement/cycle)%4==3) {return 4;}
     };
 
-    this.attack = function () {
-        this.attackStatus = true;
-        if(this.energie >= this.costAttack) {
+    this.interact = function () {
+
+        var cible = detectEntite(this,this.direction,30);
+        this.showAttack += 10;
+        if(this.energie >= this.costAttack && typeof cible === 'object') {
             this.energie -= this.costAttack;
-            this.showAttack += 10;
-            if(typeof detectEntite(this,this.direction,30) === 'object') {
-                var cible = detectEntite(this,this.direction,30);
-                cible.vie -= 25;
-                cible.showPV = 60;
-            }
+
+            cible.vie -= 25;
+            cible.showPV = 60;
         }
 
     };

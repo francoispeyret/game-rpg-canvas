@@ -61,6 +61,8 @@ function setup() {
 		entites.push(new Bob(entiteName,entiteX,entiteY,entiteMapX,entiteMapY));
     }
 
+    entites.push(new Loot('gold',100,200,200,'#1','#1'));
+
     var x = mapping.mapCurrent[[0]].length * mapping.caseWidth + ui.interfaceWidth;
     var y = mapping.mapCurrent.length * mapping.caseHeight;
     createCanvas(x,y);
@@ -77,7 +79,7 @@ function draw() {
     entites.sort(sortForDisplay);
 
     for(var i=0;i<entites.length;i++) {
-        if(entites[i].vie>0) {
+        if(entites[i].vie>0 || entites[i].object==true) {
             if(entites[i].name=='joueur') {
 				entites[i].display();
 				entites[i].update();
@@ -148,7 +150,7 @@ function keyReleased() {
 function keyPressed() {
     switch (keyCode) {
         case 32: // espace
-            bob.attack();
+            bob.interact();
             ui.spaceKeyPressed = true;
             break;
         case 39: // droite
