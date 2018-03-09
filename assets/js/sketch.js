@@ -14,7 +14,7 @@ var mapCurrentId = 2.1;
 var loading = true;
 
 // images
-var grass, ground, tree, rock, bobimage;
+var grass, ground, tree, rock, bobimage, gold;
 
 // chargement des assets
 function preload() {
@@ -23,6 +23,7 @@ function preload() {
     ground = loadImage("assets/images/ground.png");
     tree = loadImage("assets/images/tree.png");
     rock = loadImage("assets/images/rock.png");
+    gold = loadImage("assets/images/gold.png");
     // sprite du joueur
     bobimage = {
         down1: loadImage("assets/images/bob-down-1.png"),
@@ -107,10 +108,14 @@ function draw() {
 
 // tri pour afficher selont la position en y
 function sortForDisplay(a,b) {
-    if (a.y < b.y)
+    if (a.zindex > 0) {
+        if (a.y < b.y)
+            return -1;
+        if (a.y > b.y)
+            return 1;
+    } else {
         return -1;
-    if (a.y > b.y)
-        return 1;
+    }
     return 0;
 }
 
@@ -189,7 +194,7 @@ function detectPos (o,d) {
 // detection des entietes selont la direction et la distance
 function detectEntite(obj,direction,distance) {
     if(distance==null)
-		distance = 1;
+		distance = obj.vitesse;
     if(entites.length <= 0) {
         return true;
     }

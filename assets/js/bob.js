@@ -1,19 +1,25 @@
 
 function Bob(name,x,y,mapX,mapY) {
     this.id = entiteIdGlobal+1;
+    entiteIdGlobal++;
     this.type = 'personnage';
+
+    this.zindex = 10;
+
 	this.mapX = mapX;
 	if(this.mapX===undefined)
         this.mapX = 0;
 	this.mapY = mapY;
 	if(this.mapY===undefined)
         this.mapY = 0;
-    entiteIdGlobal++;
+
     this.name = name;
     if(this.name===undefined)
         this.name = 'entite';
+
     this.x = x;
     this.y = y;
+
     this.w = 30;
     this.h = 30;
 
