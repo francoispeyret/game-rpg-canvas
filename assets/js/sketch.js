@@ -1,6 +1,7 @@
 var debug = false;
 
 var ui = {};
+var inventory;
 var mapping = {};
 var mapHeight = 12;
 var mapWidth = 12;
@@ -53,6 +54,8 @@ function setup() {
     mapping.createMap();
     mapping.changeMap();
 
+    inventory = new Inventory();
+
     for(var e = 0; e < mapping.entites['#1']['#1'].length; e++) {
 		var entiteName = mapping.entites['#1']['#1'][e][0];
 		var entiteX = mapping.entites['#1']['#1'][e][1];
@@ -62,7 +65,21 @@ function setup() {
 		entites.push(new Bob(entiteName,entiteX,entiteY,entiteMapX,entiteMapY));
     }
 
-    entites.push(new Loot('gold',100,200,200,'#1','#1'));
+    entites.push(
+        new Loot('gold',
+                    Math.floor(random(10,30)),
+                    Math.floor(random(200,300)),
+                    Math.floor(random(100,500)),'#1','#1'));
+    entites.push(
+        new Loot('gold',
+                    Math.floor(random(10,30)),
+                    Math.floor(random(200,300)),
+                    Math.floor(random(100,500)),'#1','#1'));
+    entites.push(
+        new Loot('gold',
+                    Math.floor(random(10,30)),
+                    Math.floor(random(200,300)),
+                    Math.floor(random(100,500)),'#1','#1'));
 
     var x = mapping.mapCurrent[[0]].length * mapping.caseWidth + ui.interfaceWidth;
     var y = mapping.mapCurrent.length * mapping.caseHeight;
@@ -80,6 +97,16 @@ function draw() {
     entites.sort(sortForDisplay);
 
     for(var i=0;i<entites.length;i++) {
+        if(entites[i].capturer == true) {
+            var index = entites.indexOf(entites[i]);
+            entites.splice(index, 1);
+            continue;
+        }
+        if(entites[i].vie <= 0) {
+            var index = entites.indexOf(entites[i]);
+            entites.splice(index, 1);
+            continue;
+        }
         if(entites[i].vie>0 || entites[i].object==true) {
             if(entites[i].name=='joueur') {
 				entites[i].display();
@@ -90,9 +117,6 @@ function draw() {
 					entites[i].update();
                 }
             }
-        } else {
-            var index = entites.indexOf(entites[i]);
-            entites.splice(index, 1);
         }
     }
     ui.display();
@@ -179,9 +203,13 @@ function detectPos (o,d) {
     var resultMap = detectMap(o,d);
     var resultEntites = detectEntite(o,d);
 
-    if(resultMap >= 2 && resultMap < 3  && resultEntites === true) {
+    if(resultEntites instanceof Loot) {
+        capturerLoot(resultEntites);
+    }
+
+    if(resultMap >= 2 && resultMap < 3  && !(resultEntites instanceof Bob)) {
         return true;
-    } else if (typeof resultMap === 'object' && resultMap[0].substr(0,1)=='#' && resultEntites===true) {
+    } else if (resultMap instanceof Bob && resultMap[0].substr(0,1)=='#' && resultEntites===true) {
         mapping.changeMap(resultMap[0],resultMap[1],mapPositionY,mapPositionX,d);
         loading = false;
         return false;

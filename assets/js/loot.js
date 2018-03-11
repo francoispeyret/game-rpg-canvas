@@ -7,13 +7,16 @@ function Loot(type,quantity,x,y,mapX,mapY) {
     this.quantity = quantity;
     this.x = x;
     this.y = y;
+    this.w = 22;
+    this.h = 20;
     this.mapX = mapX;
     this.mapY = mapY;
+    this.capturer = false;
 
     this.display = function() {
         noStroke();
         noFill();
-        image(gold, x, y, 22, 20);
+        image(gold, this.x, this.y, this.w, this.h);
 
     };
 
@@ -21,5 +24,14 @@ function Loot(type,quantity,x,y,mapX,mapY) {
 
     };
 
+
+}
+
+function capturerLoot(loot) {
+    loot.capturer = true;
+    if(loot.type=="gold"){
+        inventory.goldQuantity += loot.quantity;
+    }
+    loot.quantity = 0;
 
 }

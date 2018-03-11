@@ -50,6 +50,13 @@ function Interface() {
         text('MANA',x+10,75);
         rect(x+10,80,bob.mana,10);
 
+        // GOLD
+        noStroke();
+        fill(200,210,44);
+        textAlign(LEFT);
+        image(gold, x+10, 105, 10, 11);
+        text(inventory.goldQuantity,x+25,115);
+
         // bare espace
         stroke(60,55,47);
         strokeWeight(1);
