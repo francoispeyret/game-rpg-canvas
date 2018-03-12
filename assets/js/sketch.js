@@ -5,13 +5,11 @@ var inventory;
 var mapping = {};
 var mapHeight = 12;
 var mapWidth = 12;
-var mapID = 1;
 var mapPositionX = '#1';
 var mapPositionY = '#1';
-//var bob = {};
 var entites = [];
+var particules = [];
 var entiteIdGlobal = 0;
-var mapCurrentId = 2.1;
 var loading = true;
 
 // images
@@ -94,9 +92,34 @@ function draw() {
     background(255,0,0);
 
     mapping.display();
-    entites.sort(sortForDisplay);
+    entites.sort(sortByY);
+    entites.sort(sortByZindex);
 
+    for(var i=0;i<particules.length;i++) {
+        particules[i].update();
+        particules[i].display();
+    }
+    for(var i=0; i<particules.length; i++) {
+        if(particules[i].vie <= 0) {
+            var index = particules.indexOf(particules[i]);
+            particules.splice(index, 1);
+            continue;
+        }
+    }
     for(var i=0;i<entites.length;i++) {
+        if(entites[i].vie>0 || entites[i].object==true) {
+            if(entites[i].name=='joueur') {
+				entites[i].update();
+                entites[i].display();
+            } else {
+                if(entites[i].mapX==mapPositionX && entites[i].mapY==mapPositionY) {
+					entites[i].update();
+                    entites[i].display();
+                }
+            }
+        }
+    }
+    for(var i=0; i<entites.length; i++) {
         if(entites[i].capturer == true) {
             var index = entites.indexOf(entites[i]);
             entites.splice(index, 1);
@@ -106,17 +129,6 @@ function draw() {
             var index = entites.indexOf(entites[i]);
             entites.splice(index, 1);
             continue;
-        }
-        if(entites[i].vie>0 || entites[i].object==true) {
-            if(entites[i].name=='joueur') {
-				entites[i].display();
-				entites[i].update();
-            } else {
-                if(entites[i].mapX==mapPositionX && entites[i].mapY==mapPositionY) {
-					entites[i].display();
-					entites[i].update();
-                }
-            }
         }
     }
     ui.display();
@@ -128,210 +140,4 @@ function draw() {
         text(mapPositionX, 300, 290);
     }
 
-}
-
-// tri pour afficher selont la position en y
-function sortForDisplay(a,b) {
-    if (a.zindex > 0) {
-        if (a.y < b.y)
-            return -1;
-        if (a.y > b.y)
-            return 1;
-    } else {
-        return -1;
-    }
-    return 0;
-}
-
-function arraysIdentical(a, b) {
-    var i = a.length;
-    if (i != b.length) return false;
-    while (i--) {
-        if (a[i] !== b[i]) return false;
-    }
-    return true;
-}
-
-function keyReleased() {
-    if (keyCode == UP_ARROW || keyCode == DOWN_ARROW || keyCode == RIGHT_ARROW || keyCode == LEFT_ARROW) {
-        bob.marcheStatus=false;
-    }
-
-    switch (keyCode) {
-        case 32: // espace
-            ui.spaceKeyPressed = false;
-            break;
-        case 39: // droite
-            ui.rightKeyPressed = false;
-            break;
-        case 40: // bas
-            ui.downKeyPressed = false;
-            break;
-        case 37: // gauche
-            ui.leftKeyPressed = false;
-            break;
-        case 38: // haut
-            ui.topKeyPressed = false;
-            break;
-    }
-}
-
-function keyPressed() {
-    switch (keyCode) {
-        case 32: // espace
-            bob.interact();
-            ui.spaceKeyPressed = true;
-            break;
-        case 39: // droite
-            ui.rightKeyPressed = true;
-            break;
-        case 40: // bas
-            ui.downKeyPressed = true;
-            break;
-        case 37: // gauche
-            ui.leftKeyPressed = true;
-            break;
-        case 38: // haut
-            ui.topKeyPressed = true;
-            break;
-    }
-}
-
-
-// detection des obstacles ou des interection avec la map et les entites
-function detectPos (o,d) {
-    var resultMap = detectMap(o,d);
-    var resultEntites = detectEntite(o,d);
-
-    if(resultEntites instanceof Loot) {
-        capturerLoot(resultEntites);
-    }
-
-    if(resultMap >= 2 && resultMap < 3  && !(resultEntites instanceof Bob)) {
-        return true;
-    } else if (resultMap instanceof Bob && resultMap[0].substr(0,1)=='#' && resultEntites===true) {
-        mapping.changeMap(resultMap[0],resultMap[1],mapPositionY,mapPositionX,d);
-        loading = false;
-        return false;
-    } else {
-        bob.marcheStatus=false;
-        return false;
-    }
-}
-
-// detection des entietes selont la direction et la distance
-function detectEntite(obj,direction,distance) {
-    if(distance==null)
-		distance = obj.vitesse;
-    if(entites.length <= 0) {
-        return true;
-    }
-    switch (direction) {
-        case 'left':
-            for(e=0;e<entites.length;e++) {
-                if(obj.name!=entites[e].name && collideRectRect(obj.x-distance, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
-                    return entites[e];
-                }
-				if(obj.name!='joueur' && collideRectRect(obj.x-distance, obj.y, obj.w, obj.h, bob.x, bob.y, bob.w, bob.h)) {
-					return false;
-				}
-            }
-        break;
-        case 'right':
-            for(e=0;e<entites.length;e++) {
-                if(obj.name!=entites[e].name && collideRectRect(obj.x+distance, obj.y, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
-                    return entites[e];
-                }
-				if(obj.name!='joueur' && collideRectRect(obj.x+distance, obj.y, obj.w, obj.h, bob.x, bob.y, bob.w, bob.h)) {
-					return false;
-				}
-            }
-        break;
-        case 'up':
-            for(e=0;e<entites.length;e++) {
-                if(obj.name!=entites[e].name && collideRectRect(obj.x, obj.y-distance, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
-                    return entites[e];
-                }
-				if(obj.name!='joueur' && collideRectRect(obj.x, obj.y-distance, obj.w, obj.h, bob.x, bob.y, bob.w, bob.h)) {
-					return false;
-				}
-            }
-        break;
-        case 'down':
-            for(e=0;e<entites.length;e++) {
-                if(obj.name!=entites[e].name && collideRectRect(obj.x, obj.y+distance, obj.w, obj.h, entites[e].x, entites[e].y, entites[e].w, entites[e].h)) {
-                    return entites[e];
-                }
-				if(obj.name!='joueur' && collideRectRect(obj.x, obj.y+distance, obj.w, obj.h, bob.x, bob.y, bob.w, bob.h)) {
-					return false;
-				}
-            }
-        break;
-        default:
-            return false;
-    }
-    return true;
-}
-
-// detection des elements de la map : retourne la valeur de la case a une distance de 1px
-function detectMap(obj,direction) {
-    switch (direction) {
-        case 'left':
-            var posX = (obj.x-1) / mapping.caseWidth; // left
-            var mapX = Math.floor(posX);
-            var posY = (obj.y) / mapping.caseHeight;
-            var posYB = (obj.y+obj.h) / mapping.caseHeight;
-            var mapY = Math.floor(posY);
-            var mapYB = Math.floor(posYB);
-            var mapValue = mapping.mapCurrent[mapY][mapX];
-            var mapValueB = mapping.mapCurrent[mapYB][mapX];
-            if(typeof mapValue==='object' && typeof mapValueB==='object')
-                return mapValue;
-            if(Math.floor(mapValue)===Math.floor(mapValueB))
-                return mapValue;
-            break;
-        case 'right':
-            var posX = (obj.x+obj.w+1) / mapping.caseWidth; // right
-            var mapX = Math.floor(posX);
-            var posY = (obj.y) / mapping.caseHeight;
-            var posYB = (obj.y+obj.h) / mapping.caseHeight;
-            var mapY = Math.floor(posY);
-            var mapYB = Math.floor(posYB);
-            var mapValue = mapping.mapCurrent[mapY][mapX];
-            var mapValueB = mapping.mapCurrent[mapYB][mapX];
-            if(typeof mapValue==='object' && typeof mapValueB==='object')
-                return mapValue;
-            if(Math.floor(mapValue)===Math.floor(mapValueB))
-                return mapValue;
-            break;
-        case 'up':
-            var posX = (obj.x) / mapping.caseWidth;
-            var mapX = Math.floor(posX);
-            var posXB = (obj.x+obj.w) / mapping.caseWidth;
-            var mapXB = Math.floor(posXB);
-            var posY = (obj.y-1) / mapping.caseHeight; // up
-            var mapY = Math.floor(posY);
-            var mapValue = mapping.mapCurrent[mapY][mapX];
-            var mapValueB = mapping.mapCurrent[mapY][mapXB];
-            if(typeof mapValue==='object' && typeof mapValueB==='object')
-                return mapValue;
-            if(Math.floor(mapValue)===Math.floor(mapValueB))
-                return mapValue;
-            break;
-        case 'down':
-            var posX = (obj.x) / mapping.caseWidth;
-            var mapX = Math.floor(posX);
-            var posXB = (obj.x+obj.w) / mapping.caseWidth;
-            var mapXB = Math.floor(posXB);
-            var posY = (obj.y+obj.h+1) / mapping.caseHeight; // down
-            var mapY = Math.floor(posY);
-            var mapValue = mapping.mapCurrent[mapY][mapX];
-            var mapValueB = mapping.mapCurrent[mapY][mapXB];
-            if(typeof mapValue==='object' && typeof mapValueB==='object')
-                return mapValue;
-            if(Math.floor(mapValue)===Math.floor(mapValueB))
-                return mapValue;
-            break;
-    }
-    return false;
 }

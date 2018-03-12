@@ -1,5 +1,10 @@
 
 function Bob(name,x,y,mapX,mapY) {
+
+    this.name = name;
+    if(this.name===undefined)
+        this.name = 'entite';
+
     this.id = entiteIdGlobal+1;
     entiteIdGlobal++;
     this.type = 'personnage';
@@ -12,10 +17,6 @@ function Bob(name,x,y,mapX,mapY) {
 	this.mapY = mapY;
 	if(this.mapY===undefined)
         this.mapY = 0;
-
-    this.name = name;
-    if(this.name===undefined)
-        this.name = 'entite';
 
     this.x = x;
     this.y = y;
@@ -168,6 +169,7 @@ function Bob(name,x,y,mapX,mapY) {
                             this.x = this.x - 1;
                             this.deplacement++;
                             this.marcheStatus= true;
+                            this.createParticules();
                         }
                     }
                     else if (keyIsDown(RIGHT_ARROW)) {
@@ -176,6 +178,7 @@ function Bob(name,x,y,mapX,mapY) {
                             this.x = this.x + 1;
                             this.deplacement++;
                             this.marcheStatus= true;
+                            this.createParticules();
                         }
                     }
                     else if (keyIsDown(UP_ARROW)) {
@@ -184,6 +187,7 @@ function Bob(name,x,y,mapX,mapY) {
                             this.y = this.y - 1;
                             this.deplacement++;
                             this.marcheStatus= true;
+                            this.createParticules();
                         }
                     }
                     else if (keyIsDown(DOWN_ARROW)) {
@@ -192,6 +196,7 @@ function Bob(name,x,y,mapX,mapY) {
                             this.y = this.y + 1;
                             this.deplacement++;
                             this.marcheStatus= true;
+                            this.createParticules();
                         }
                     }
 
@@ -233,6 +238,12 @@ function Bob(name,x,y,mapX,mapY) {
             cible.showPV = 60;
         }
 
+    };
+
+    this.createParticules = function() {
+        var particuleX = this.x + this.w / 3 + random(-10, 10);
+        var particuleY = this.y + this.h / 2 + random(-7, 7);
+        particules.push(new Particule(particuleX, particuleY, this.direction));
     };
 
 }
