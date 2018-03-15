@@ -93,23 +93,47 @@ function MapGenerator() {
         for(a=0;a<=mapHeight;a++) {
             mapG[a] = [];
             for(b=0;b<=mapWidth;b++) {
+                mapG[a][b]=2;
+            }
+        }
+
+
+        // sol en terre
+        for(i=0; i < floor(random(7,18)); i++) {
+
+            var xTerre = floor(random(2,mapWidth-2));
+            var yTerre = floor(random(2,mapHeight-2));
+            mapG[yTerre][xTerre] = 2.1;
+            mapG[yTerre+1][xTerre+1] = 2.1;
+            mapG[yTerre][xTerre+1] = 2.1;
+            mapG[yTerre+1][xTerre] = 2.1;
+
+            var xTerre = floor(random(2,mapWidth-2));
+            var yTerre = floor(random(2,mapHeight-2));
+            mapG[yTerre][xTerre] = 2.1;
+        }
+        // bloc de pierre
+        for(i=0; i < floor(random(2,6)); i++) {
+            mapG[ floor(random(2,mapHeight-2))][Math.floor(random(2,mapWidth-2))] = 3;
+        }
+
+
+        for(a=0;a<=mapHeight;a++) {
+            for(b=0;b<=mapWidth;b++) {
                 if(a==0 || a==mapHeight || b==0 || b==mapWidth) {
                     // generation des sorties
-                    if(a==Math.floor(mapHeight/2) && b==0) {
+                    if(a== floor(mapHeight/2) && b==0) {
                         mapG[a][b]=[y,'#' + (parseInt(x.substr(1,x.length))-1)];
-                    } else if (a==Math.floor(mapHeight/2) && b==mapWidth) {
+                    } else if (a== floor(mapHeight/2) && b==mapWidth) {
                         mapG[a][b]=[y,'#' + (parseInt(x.substr(1,x.length))+1)];
-                    } else if (a==0 && b==Math.floor(mapWidth/2)) {
+                    } else if (a==0 && b==floor(mapWidth/2)) {
                         mapG[a][b]=['#' + (parseInt(y.substr(1,y.length))-1),x];
-                    } else if (a==mapHeight && b==Math.floor(mapWidth/2)) {
+                    } else if (a==mapHeight && b==floor(mapWidth/2)) {
                         mapG[a][b]=['#' + (parseInt(y.substr(1,y.length))+1),x];
                     } else {
                         // si n'est pas une sortie c'est un buisson
                         mapG[a][b]=1;
                     }
-                } else {
-                    // si on n'est pas le contour alors creation d'un gazon
-                    mapG[a][b]=2;
                 }
             }
         }
@@ -120,19 +144,7 @@ function MapGenerator() {
             var joueurY = Math.floor(random(2,mapHeight-2));
             bob = new Bob('joueur',joueurX*30,joueurY*30);
             entites.push(bob);
-            mapG[joueurY][joueurX] = 2.1;
         }
-
-        // sol en terre
-        var housePosX = Math.floor(random(2,mapWidth-2));
-        var housePosY = Math.floor(random(2,mapHeight-2));
-        mapG[housePosY][housePosX] = 2.1;
-        mapG[housePosY+1][housePosX+1] = 2.1;
-        mapG[housePosY][housePosX+1] = 2.1;
-        mapG[housePosY+1][housePosX] = 2.1;
-
-        // bloc de pierre
-        mapG[Math.floor(random(2,mapHeight-2))][Math.floor(random(2,mapWidth-2))] = 3;
 
         // ajout d'entites
         // var rand = random(1,4);

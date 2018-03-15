@@ -78,44 +78,44 @@ function Bob(name,x,y,mapX,mapY) {
         if(this.name=='joueur' || this.name=='mechant' || this.name=='mechant2') {
             switch (this.direction) {
                 case 'down':
-                    if(this.marche()==1 || this.marcheStatus==false) {
+                    if(this.marcheCycle()==1 || this.marcheStatus==false) {
                         image(bobimage.down1, this.x-10,this.y-17,50,50);
-                    } else if(this.marche()==2 || this.marcheStatus==false) {
+                    } else if(this.marcheCycle()==2 || this.marcheStatus==false) {
                         image(bobimage.down2, this.x-10,this.y-17,50,50);
-                    } else if(this.marche()==3 || this.marcheStatus==false) {
+                    } else if(this.marcheCycle()==3 || this.marcheStatus==false) {
                         image(bobimage.down3, this.x-10,this.y-17,50,50);
                     } else {
                         image(bobimage.down4, this.x-10,this.y-17,50,50);
                     }
                     break;
                 case 'up':
-                    if(this.marche()==1 || this.marcheStatus==false) {
+                    if(this.marcheCycle()==1 || this.marcheStatus==false) {
                         image(bobimage.up1, this.x-10,this.y-17,50,50);
-                    } else if(this.marche()==2 || this.marcheStatus==false) {
+                    } else if(this.marcheCycle()==2 || this.marcheStatus==false) {
                         image(bobimage.up2, this.x-10,this.y-17,50,50);
-                    } else if(this.marche()==3 || this.marcheStatus==false) {
+                    } else if(this.marcheCycle()==3 || this.marcheStatus==false) {
                         image(bobimage.up3, this.x-10,this.y-17,50,50);
                     } else {
                         image(bobimage.up4, this.x-10,this.y-17,50,50);
                     }
                     break;
                 case 'right':
-                    if(this.marche()==1 || this.marcheStatus==false) {
+                    if(this.marcheCycle()==1 || this.marcheStatus==false) {
                         image(bobimage.right1, this.x-10,this.y-17,50,50);
-                    } else if(this.marche()==2 && this.marcheStatus==true) {
+                    } else if(this.marcheCycle()==2 && this.marcheStatus==true) {
                         image(bobimage.right2, this.x-10,this.y-17,50,50);
-                    } else if(this.marche()==3 && this.marcheStatus==true) {
+                    } else if(this.marcheCycle()==3 && this.marcheStatus==true) {
                         image(bobimage.right3, this.x-10,this.y-17,50,50);
                     } else if(this.marcheStatus==true) {
                         image(bobimage.right4, this.x-10,this.y-17,50,50);
                     }
                     break;
                 case 'left':
-                    if(this.marche()==1 || this.marcheStatus==false) {
+                    if(this.marcheCycle()==1 || this.marcheStatus==false) {
                         image(bobimage.left1, this.x-10,this.y-17,50,50);
-                    } else if(this.marche()==2 && this.marcheStatus==true) {
+                    } else if(this.marcheCycle()==2 && this.marcheStatus==true) {
                         image(bobimage.left2, this.x-10,this.y-17,50,50);
-                    } else if(this.marche()==3 && this.marcheStatus==true) {
+                    } else if(this.marcheCycle()==3 && this.marcheStatus==true) {
                         image(bobimage.left3, this.x-10,this.y-17,50,50);
                     } else if(this.marcheStatus==true){
                         image(bobimage.left4, this.x-10,this.y-17,50,50);
@@ -167,36 +167,28 @@ function Bob(name,x,y,mapX,mapY) {
                         this.direction = 'left';
                         if( detectPos(this, 'left')) {
                             this.x = this.x - 1;
-                            this.deplacement++;
-                            this.marcheStatus= true;
-                            this.createParticules();
+                            this.marche();
                         }
                     }
                     else if (keyIsDown(RIGHT_ARROW)) {
                         this.direction = 'right';
                         if(detectPos(this, 'right')) {
                             this.x = this.x + 1;
-                            this.deplacement++;
-                            this.marcheStatus= true;
-                            this.createParticules();
+                            this.marche();
                         }
                     }
                     else if (keyIsDown(UP_ARROW)) {
                         this.direction = 'up';
                         if(detectPos(this, 'up')) {
                             this.y = this.y - 1;
-                            this.deplacement++;
-                            this.marcheStatus= true;
-                            this.createParticules();
+                            this.marche();
                         }
                     }
                     else if (keyIsDown(DOWN_ARROW)) {
                         this.direction = 'down';
                         if(detectPos(this, 'down')) {
                             this.y = this.y + 1;
-                            this.deplacement++;
-                            this.marcheStatus= true;
-                            this.createParticules();
+                            this.marche();
                         }
                     }
 
@@ -219,12 +211,19 @@ function Bob(name,x,y,mapX,mapY) {
         }
     };
 
-    this.marche = function() {
+    this.marcheCycle = function() {
         var cycle = 16;
         if(round(this.deplacement/cycle)%4==0) {return 1;}
         else if(round(this.deplacement/cycle)%4==1) {return 2;}
         else if(round(this.deplacement/cycle)%4==2) {return 3;}
         else if(round(this.deplacement/cycle)%4==3) {return 4;}
+    };
+    
+    this.marche = function() {
+        this.deplacement++;
+        this.marcheStatus= true;
+        if(detectMap(this,this.direction)==2.1)
+            this.createParticules();
     };
 
     this.interact = function () {
