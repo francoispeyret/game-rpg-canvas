@@ -79,46 +79,46 @@ function Bob(name,x,y,mapX,mapY) {
             switch (this.direction) {
                 case 'down':
                     if(this.marcheCycle()==1 || this.marcheStatus==false) {
-                        image(bobimage.down1, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10, this.y-17, 50,50,0,0,50,50);
                     } else if(this.marcheCycle()==2 || this.marcheStatus==false) {
-                        image(bobimage.down2, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,0,50,50,50);
                     } else if(this.marcheCycle()==3 || this.marcheStatus==false) {
-                        image(bobimage.down3, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,0,100,50,50);
                     } else {
-                        image(bobimage.down4, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,0,150,50,50);
                     }
                     break;
                 case 'up':
                     if(this.marcheCycle()==1 || this.marcheStatus==false) {
-                        image(bobimage.up1, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,150,0,50,50);
                     } else if(this.marcheCycle()==2 || this.marcheStatus==false) {
-                        image(bobimage.up2, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,150,50,50,50);
                     } else if(this.marcheCycle()==3 || this.marcheStatus==false) {
-                        image(bobimage.up3, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,150,100,50,50);
                     } else {
-                        image(bobimage.up4, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,150,150,50,50);
                     }
                     break;
                 case 'right':
                     if(this.marcheCycle()==1 || this.marcheStatus==false) {
-                        image(bobimage.right1, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,100,0,50,50);
                     } else if(this.marcheCycle()==2 && this.marcheStatus==true) {
-                        image(bobimage.right2, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,100,50,50,50);
                     } else if(this.marcheCycle()==3 && this.marcheStatus==true) {
-                        image(bobimage.right3, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,100,100,50,50);
                     } else if(this.marcheStatus==true) {
-                        image(bobimage.right4, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,100,150,50,50);
                     }
                     break;
                 case 'left':
                     if(this.marcheCycle()==1 || this.marcheStatus==false) {
-                        image(bobimage.left1, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,50,0,50,50);
                     } else if(this.marcheCycle()==2 && this.marcheStatus==true) {
-                        image(bobimage.left2, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,50,50,50,50);
                     } else if(this.marcheCycle()==3 && this.marcheStatus==true) {
-                        image(bobimage.left3, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,50,100,50,50);
                     } else if(this.marcheStatus==true){
-                        image(bobimage.left4, this.x-10,this.y-17,50,50);
+                        image(bobimageSprite, this.x-10,this.y-17,50,50,50,150,50,50);
                     }
                     break;
                 default:

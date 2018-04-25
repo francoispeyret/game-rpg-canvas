@@ -7,8 +7,8 @@ function Loot(type,quantity,x,y,mapX,mapY) {
     this.quantity = quantity;
     this.x = x;
     this.y = y;
-    this.w = 22;
-    this.h = 20;
+    this.w = 32;
+    this.h = 24;
     this.mapX = mapX;
     this.mapY = mapY;
     this.capturer = false;

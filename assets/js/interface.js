@@ -54,8 +54,8 @@ function Interface() {
         noStroke();
         fill(200,210,44);
         textAlign(LEFT);
-        image(gold, x+10, 105, 10, 11);
-        text(inventory.goldQuantity,x+25,115);
+        image(gold, x+10, 105, 16, 12);
+        text(inventory.goldQuantity,x+30,115);
 
         // bare espace
         stroke(60,55,47);

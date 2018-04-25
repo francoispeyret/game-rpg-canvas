@@ -38,8 +38,8 @@ function detectPos (o,d) {
 
     if(resultMap >= 2 && resultMap < 3  && !(resultEntites instanceof Bob)) {
         return true;
-    } else if (resultMap instanceof Array && resultMap[0].substr(0,1)=='#') {
-        mapping.changeMap(resultMap[0],resultMap[1],mapPositionY,mapPositionX,d);
+    } else if (resultMap instanceof Array && resultMap[0]=='exit') {
+        mapping.changeMap(resultMap[1],resultMap[2],mapPositionY,mapPositionX,d);
         loading = false;
         return false;
     } else {

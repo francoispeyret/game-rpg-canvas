@@ -43,8 +43,11 @@ function MapGenerator() {
                         image(rock, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
                         break;
                     default:
-                        fill(20);
-                        rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        if(this.mapCurrent[i][j] instanceof Array && this.mapCurrent[i][j][0]=='exit') {
+                            image(grass, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        } else {
+                            image(ground, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        }
                 }
 
                 if(debug) {
@@ -123,13 +126,13 @@ function MapGenerator() {
                 if(a==0 || a==mapHeight || b==0 || b==mapWidth) {
                     // generation des sorties
                     if(a== floor(mapHeight/2) && b==0) {
-                        mapG[a][b]=[y,'#' + (parseInt(x.substr(1,x.length))-1)];
+                        mapG[a][b]=['exit',y,'#' + (parseInt(x.substr(1,x.length))-1)];
                     } else if (a== floor(mapHeight/2) && b==mapWidth) {
-                        mapG[a][b]=[y,'#' + (parseInt(x.substr(1,x.length))+1)];
+                        mapG[a][b]=['exit',y,'#' + (parseInt(x.substr(1,x.length))+1)];
                     } else if (a==0 && b==floor(mapWidth/2)) {
-                        mapG[a][b]=['#' + (parseInt(y.substr(1,y.length))-1),x];
+                        mapG[a][b]=['exit','#' + (parseInt(y.substr(1,y.length))-1),x];
                     } else if (a==mapHeight && b==floor(mapWidth/2)) {
-                        mapG[a][b]=['#' + (parseInt(y.substr(1,y.length))+1),x];
+                        mapG[a][b]=['exit','#' + (parseInt(y.substr(1,y.length))+1),x];
                     } else {
                         // si n'est pas une sortie c'est un buisson
                         mapG[a][b]=1;
@@ -188,7 +191,7 @@ function MapGenerator() {
         // déplacement de bob dans la bonne entrée
         for (i=0;i < this.mapCurrent.length; i++) {
             for (j=0; j < this.mapCurrent[i].length; j++) {
-                if(arraysIdentical(this.mapCurrent[i][j],[oldY,oldX])) {
+                if(arraysIdentical(this.mapCurrent[i][j],['exit',oldY,oldX])) {
                     var x = j;
                     var xOffset = 0;
                     var y = i;
