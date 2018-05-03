@@ -6,7 +6,7 @@ function Particule(x, y, direction) {
     this.size = random(6, 12);
 
     this.display = function() {
-        fill(60,50,34, this.vie);
+        fill(100,80,62, this.vie);
         noStroke();
         rect(this.x,this.y,this.size,this.size);
         noFill();

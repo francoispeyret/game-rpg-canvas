@@ -13,15 +13,11 @@ var entiteIdGlobal = 0;
 var loading = true;
 
 // images
-var grass, ground, tree, rock, bobimage, gold;
+var environemment, bobimageSprite, gold;
 
 // chargement des assets
 function preload() {
-
-    grass = loadImage("assets/images/grass.png");
-    ground = loadImage("assets/images/ground.png");
-    tree = loadImage("assets/images/tree.png");
-    rock = loadImage("assets/images/rock.png");
+    environemment = loadImage("assets/images/environnement.png");
     gold = loadImage("assets/images/gold.png");
     // sprite du joueur
     bobimageSprite = loadImage("assets/images/bob.png");

@@ -31,22 +31,26 @@ function MapGenerator() {
                     case 1:
                         fill(30,64,23);
                         rect(j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
-                        image(tree, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        // tree
+                        image(environemment, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight,100,0,50,50);
                         break;
                     case 2:
-                        image(grass, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        // grass
+                        image(environemment, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight,50,0,50,50);
                         break;
                     case 2.1:
-                        image(ground, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        // ground
+                        image(environemment, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight,0,0,50,50);
                         break;
                     case 3:
-                        image(rock, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                        //rock
+                        image(environemment, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight,150,0,50,50);
                         break;
                     default:
                         if(this.mapCurrent[i][j] instanceof Array && this.mapCurrent[i][j][0]=='exit') {
-                            image(grass, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                            image(environemment, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight,50,0,50,50);
                         } else {
-                            image(ground, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight);
+                            image(environemment, j*this.caseWidth,i*this.caseHeight,this.caseWidth,this.caseHeight,0,0,50,50);
                         }
                 }
 
