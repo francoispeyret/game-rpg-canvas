@@ -216,13 +216,12 @@ function Bob(name, x, y, mapX, mapY) {
         this.display();
 
         if (this.attacks.length > 0) {
+            console.log('this.attacks.length '+this.attacks.length);
             for (i = this.attacks.length-1; i > 0; i--) {
+                console.log(i);
                 this.attacks[i].update();
             }
-            for (i = this.attacks.length -1; i > 0; i--) {
-                if(this.attacks[i].life <= 0)
-                    this.attacks.splice(i,1);
-            }
+            this.attacksCheckLife();
         }
     };
 
@@ -262,9 +261,17 @@ function Bob(name, x, y, mapX, mapY) {
     };
 
     this.firebol = function () {
-        if(this.mana > 20) {
-            this.mana -= 20;
+        if(this.mana > 5) {
+            this.mana -= 5;
             this.attacks.push(new fireBol(this.direction, this.x, this.y));
+        }
+    };
+
+    this.attacksCheckLife = function () {
+        for(i=this.attacks.length -1; i >= 0; i--) {
+            if(this.attacks[i].life <= 0) {
+                this.attacks.splice(i,1);
+            }
         }
     };
 

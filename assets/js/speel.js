@@ -1,22 +1,29 @@
 
 
-function fireBol(direction,x,y) {
+function fireBol(direction,x,y,bobName) {
     this.direction = direction;
     this.x = x+15;
     this.y = y+15;
     this.life = 100;
     this.vel = 5;
 
+    this.particles = [
+        new Particule(this.x, this.y, this.direction),
+        new Particule(this.x, this.y, this.direction),
+        new Particule(this.x, this.y, this.direction),
+    ];
+
     this.display = function () {
         fill(30,30,255);
-        ellipse(this.x,this.y,30);
+        for(i=0; this.particles.length > i; i++) {
+            // console.log(i);
+            this.particles[i].display();
+        }
+        // ellipse(this.x,this.y,30);
         noFill();
     };
 
     this.update = function() {
-        if(this.life <= 0) {
-            return this.die();
-        }
         if(this.direction==='up') {
             this.y -= this.vel;
         }

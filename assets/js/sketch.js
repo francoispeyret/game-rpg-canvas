@@ -42,21 +42,21 @@ function setup() {
 		entites.push(new Bob(entiteName,entiteX,entiteY,entiteMapX,entiteMapY));
     }
 
-    entites.push(
-        new Loot('gold',
-                    Math.floor(random(10,30)),
-                    Math.floor(random(200,300)),
-                    Math.floor(random(100,500)),'#1','#1'));
-    entites.push(
-        new Loot('gold',
-                    Math.floor(random(10,30)),
-                    Math.floor(random(200,300)),
-                    Math.floor(random(100,500)),'#1','#1'));
-    entites.push(
-        new Loot('gold',
-                    Math.floor(random(10,30)),
-                    Math.floor(random(200,300)),
-                    Math.floor(random(100,500)),'#1','#1'));
+    // entites.push(
+    //     new Loot('gold',
+    //                 Math.floor(random(10,30)),
+    //                 Math.floor(random(200,300)),
+    //                 Math.floor(random(100,500)),'#1','#1'));
+    // entites.push(
+    //     new Loot('gold',
+    //                 Math.floor(random(10,30)),
+    //                 Math.floor(random(200,300)),
+    //                 Math.floor(random(100,500)),'#1','#1'));
+    // entites.push(
+    //     new Loot('gold',
+    //                 Math.floor(random(10,30)),
+    //                 Math.floor(random(200,300)),
+    //                 Math.floor(random(100,500)),'#1','#1'));
 
     var x = mapping.mapCurrent[[0]].length * mapping.caseWidth + ui.interfaceWidth;
     var y = mapping.mapCurrent.length * mapping.caseHeight;
