@@ -8,7 +8,6 @@ function fireBol(direction,x,y) {
     this.vel = 5;
 
     this.display = function () {
-        this.update();
         fill(30,30,255);
         ellipse(this.x,this.y,30);
         noFill();
@@ -32,6 +31,10 @@ function fireBol(direction,x,y) {
         }
 
         this.life -= 1;
+        if(this.life <= 0)
+            this.die();
+
+        this.display();
     };
     
     this.die = function () {

@@ -44,12 +44,6 @@ function Bob(name, x, y, mapX, mapY) {
 
     this.display = function () {
 
-        if (this.attacks.length > 0) {
-            for (i = this.attacks.length; i > 0; i--) {
-                this.attacks[i - 1].display();
-            }
-        }
-
         if (debug) {
             stroke(255);
             strokeWeight(1);
@@ -219,6 +213,17 @@ function Bob(name, x, y, mapX, mapY) {
 
             }
         }
+        this.display();
+
+        if (this.attacks.length > 0) {
+            for (i = this.attacks.length-1; i > 0; i--) {
+                this.attacks[i].update();
+            }
+            for (i = this.attacks.length -1; i > 0; i--) {
+                if(this.attacks[i].life <= 0)
+                    this.attacks.splice(i,1);
+            }
+        }
     };
 
     this.marcheCycle = function () {
@@ -257,8 +262,10 @@ function Bob(name, x, y, mapX, mapY) {
     };
 
     this.firebol = function () {
-        this.attacks.push(new fireBol(this.direction, this.x, this.y));
-        this.mana -= 20;
+        if(this.mana > 20) {
+            this.mana -= 20;
+            this.attacks.push(new fireBol(this.direction, this.x, this.y));
+        }
     };
 
     this.createParticules = function () {

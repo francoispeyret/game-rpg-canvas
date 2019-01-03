@@ -76,7 +76,6 @@ function draw() {
 
     for(var i=0;i<particules.length;i++) {
         particules[i].update();
-        particules[i].display();
     }
     for(var i=0; i<particules.length; i++) {
         if(particules[i].vie <= 0) {
