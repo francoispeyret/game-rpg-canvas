@@ -278,7 +278,10 @@ function Bob(name, x, y, mapX, mapY) {
     this.createParticules = function () {
         var particuleX = this.x + this.w / 3 + random(-10, 10);
         var particuleY = this.y + this.h / 2 + random(-7, 7);
-        particules.push(new Particule(particuleX, particuleY, this.direction));
+        particules.push(new Particule(particuleX, particuleY, this.direction, {
+            effect: 'fade',
+            vel: 0.15,
+        }));
     };
 
 }
