@@ -23,7 +23,7 @@ function Bob(name, x, y, mapX, mapY) {
     this.w = 30;
     this.h = 30;
 
-    this.vitesse = 1;
+    this.vel = 1;
     this.direction = 'down';
     this.deplacement = 0;
     this.marcheStatus = false;
@@ -156,17 +156,17 @@ function Bob(name, x, y, mapX, mapY) {
                 }
                 // sprint
                 if (keyIsDown(16) && this.energie > 0 && this.marcheStatus == true) {// shift
-                    this.vitesse = 2;
+                    this.vel = 2;
                     this.energie -= 0.3;
                 } else {
-                    this.vitesse = 1;
+                    this.vel = 1;
                     if (this.marcheStatus == false && this.energie < this.energieMax) {
                         this.energie += 0.30;
                     } else if (this.energie < this.energieMax) {
                         this.energie += 0.10;
                     }
                 }
-                for (c = 0; c <= this.vitesse; c++) {
+                for (c = 0; c <= this.vel; c++) {
                     if (keyIsDown(LEFT_ARROW)) {
                         this.direction = 'left';
                         if (detectPos(this, 'left')) {
@@ -215,14 +215,7 @@ function Bob(name, x, y, mapX, mapY) {
         }
         this.display();
 
-        if (this.attacks.length > 0) {
-            console.log('this.attacks.length '+this.attacks.length);
-            for (i = this.attacks.length-1; i > 0; i--) {
-                console.log(i);
-                this.attacks[i].update();
-            }
-            this.attacksCheckLife();
-        }
+        this.displayAttacks();
     };
 
     this.marcheCycle = function () {
@@ -268,10 +261,19 @@ function Bob(name, x, y, mapX, mapY) {
     };
 
     this.attacksCheckLife = function () {
-        for(i=this.attacks.length -1; i >= 0; i--) {
+        for (var i=0; i < this.attacks.length; i++) {
             if(this.attacks[i].life <= 0) {
                 this.attacks.splice(i,1);
             }
+        }
+    };
+
+    this.displayAttacks = function () {
+        if (this.attacks.length > 0) {
+            for (var i = 0; i < this.attacks.length; i++) {
+                this.attacks[i].update();
+            }
+            this.attacksCheckLife();
         }
     };
 
@@ -281,6 +283,9 @@ function Bob(name, x, y, mapX, mapY) {
         particules.push(new Particule(particuleX, particuleY, this.direction, {
             effect: 'fade',
             vel: 0.15,
+            r: 100,
+            g: 80,
+            b: 62
         }));
     };
 

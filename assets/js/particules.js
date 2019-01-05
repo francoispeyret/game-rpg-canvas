@@ -1,43 +1,58 @@
 function Particule(x, y, direction, settings) {
     this.x = x;
     this.y = y;
-    this.direction = direction;
-    this.effect = settings.effect;
-    if(typeof settings.vel !== 'undefined')
-        this.vel = settings.vel;
+    if(typeof direction !== 'undefined')
+        this.direction = direction;
     else
-        this.vel = 0.1;
-    this.vie = random(30, 60); // si grand alors vie moins longtemps
+        this.direction = null;
+    this.life = random(30, 60); // si grand alors life moins longtemps
     this.size = random(6, 12);
+
+    if(typeof settings !== 'undefined')
+        this.settings = settings;
+    else
+        this.settings = {};
+    if(typeof this.settings.effect === 'undefined')
+        this.settings.effect = null;
+    if(typeof this.settings.vel === 'undefined')
+        this.settings.vel = 0.1;
+    if(typeof this.settings.r === 'undefined')
+        this.settings.r = 0;
+    if(typeof this.settings.g === 'undefined')
+        this.settings.g = 0;
+    if(typeof this.settings.b === 'undefined')
+        this.settings.b = 0;
+    if(typeof this.settings.a === 'undefined')
+        this.settings.a = this.life;
 
     this.display = function() {
         noStroke();
-        if(typeof settings.effect !== 'undefined' && settings.effect === 'fade') {
-            fill(100, 80, 62, this.vie);
-        } else {
-            fill(100, 80, 62);
-        }
+        fill(this.settings.r, this.settings.r, this.settings.r, this.settings.a);
         rect(this.x,this.y,this.size,this.size);
         noFill();
     };
 
     this.update = function() {
-        this.vie -= 1;
+        this.life -= 1;
 
         switch (this.direction) {
+            default:
+                break;
             case 'up':
-                this.y += this.vel;
+                this.y += this.settings.vel;
                 break;
             case 'right':
-                this.x -= this.vel;
+                this.x -= this.settings.vel;
                 break;
             case 'bottom':
-                this.y -= this.vel;
+                this.y -= this.settings.vel;
                 break;
             case 'left':
-                this.x += this.vel;
+                this.x += this.settings.vel;
                 break;
         }
+
+        this.display();
     };
 
 }

@@ -42,21 +42,21 @@ function setup() {
 		entites.push(new Bob(entiteName,entiteX,entiteY,entiteMapX,entiteMapY));
     }
 
-    // entites.push(
-    //     new Loot('gold',
-    //                 Math.floor(random(10,30)),
-    //                 Math.floor(random(200,300)),
-    //                 Math.floor(random(100,500)),'#1','#1'));
-    // entites.push(
-    //     new Loot('gold',
-    //                 Math.floor(random(10,30)),
-    //                 Math.floor(random(200,300)),
-    //                 Math.floor(random(100,500)),'#1','#1'));
-    // entites.push(
-    //     new Loot('gold',
-    //                 Math.floor(random(10,30)),
-    //                 Math.floor(random(200,300)),
-    //                 Math.floor(random(100,500)),'#1','#1'));
+    entites.push(
+        new Loot('gold',
+                    Math.floor(random(10,30)),
+                    Math.floor(random(200,300)),
+                    Math.floor(random(100,500)),'#1','#1'));
+    entites.push(
+        new Loot('gold',
+                    Math.floor(random(10,30)),
+                    Math.floor(random(200,300)),
+                    Math.floor(random(100,500)),'#1','#1'));
+    entites.push(
+        new Loot('gold',
+                    Math.floor(random(10,30)),
+                    Math.floor(random(200,300)),
+                    Math.floor(random(100,500)),'#1','#1'));
 
     var x = mapping.mapCurrent[[0]].length * mapping.caseWidth + ui.interfaceWidth;
     var y = mapping.mapCurrent.length * mapping.caseHeight;
@@ -76,12 +76,8 @@ function draw() {
 
     for(var i=0;i<particules.length;i++) {
         particules[i].update();
-    }
-    for(var i=0; i<particules.length; i++) {
-        if(particules[i].vie <= 0) {
-            var index = particules.indexOf(particules[i]);
-            particules.splice(index, 1);
-            continue;
+        if(particules[i].life <= 0) {
+            particules.splice(i,1);
         }
     }
     for(var i=0;i<entites.length;i++) {

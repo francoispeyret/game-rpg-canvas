@@ -51,7 +51,7 @@ function detectPos (o,d) {
 // detection des entietes selont la direction et la distance
 function detectEntite(obj,direction,distance) {
     if(distance==null)
-        distance = obj.vitesse;
+        distance = obj.vel;
     if(entites.length <= 0) {
         return true;
     }
