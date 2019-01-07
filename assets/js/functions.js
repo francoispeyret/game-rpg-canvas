@@ -112,6 +112,10 @@ function detectMap(obj,direction) {
             var posYB = (obj.y+obj.h) / mapping.caseHeight;
             var mapY = Math.floor(posY);
             var mapYB = Math.floor(posYB);
+            if(typeof mapping.mapCurrent[mapY] === 'undefined')
+                return false;
+            if(typeof mapping.mapCurrent[mapY][mapX] === 'undefined')
+                return false;
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapYB][mapX];
             if(typeof mapValue==='object' && typeof mapValueB==='object')
@@ -126,6 +130,10 @@ function detectMap(obj,direction) {
             var posYB = (obj.y+obj.h) / mapping.caseHeight;
             var mapY = Math.floor(posY);
             var mapYB = Math.floor(posYB);
+            if(typeof mapping.mapCurrent[mapY] === 'undefined')
+                return false;
+            if(typeof mapping.mapCurrent[mapY][mapX] === 'undefined')
+                return false;
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapYB][mapX];
             if(typeof mapValue==='object' && typeof mapValueB==='object')
@@ -140,6 +148,10 @@ function detectMap(obj,direction) {
             var mapXB = Math.floor(posXB);
             var posY = (obj.y-1) / mapping.caseHeight; // up
             var mapY = Math.floor(posY);
+            if(typeof mapping.mapCurrent[mapY] === 'undefined')
+                return false;
+            if(typeof mapping.mapCurrent[mapY][mapX] === 'undefined')
+                return false;
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapY][mapXB];
             if(typeof mapValue==='object' && typeof mapValueB==='object')
@@ -154,6 +166,10 @@ function detectMap(obj,direction) {
             var mapXB = Math.floor(posXB);
             var posY = (obj.y+obj.h+1) / mapping.caseHeight; // down
             var mapY = Math.floor(posY);
+            if(typeof mapping.mapCurrent[mapY] === 'undefined')
+                return false;
+            if(typeof mapping.mapCurrent[mapY][mapX] === 'undefined')
+                return false;
             var mapValue = mapping.mapCurrent[mapY][mapX];
             var mapValueB = mapping.mapCurrent[mapY][mapXB];
             if(typeof mapValue==='object' && typeof mapValueB==='object')

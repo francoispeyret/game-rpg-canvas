@@ -11,6 +11,7 @@ var entites = [];
 var particules = [];
 var entiteIdGlobal = 0;
 var loading = true;
+var bob; // joueur
 
 // images
 var environemment, bobimageSprite, gold;
@@ -32,6 +33,11 @@ function setup() {
     mapping.changeMap();
 
     inventory = new Inventory();
+
+    var joueurX = Math.floor(random(2,mapWidth-2));
+    var joueurY = Math.floor(random(2,mapHeight-2));
+    bob = new Bob('joueur',joueurX*30,joueurY*30);
+    entites.push(bob);
 
     for(var e = 0; e < mapping.entites['#1']['#1'].length; e++) {
 		var entiteName = mapping.entites['#1']['#1'][e][0];
@@ -58,8 +64,9 @@ function setup() {
                     Math.floor(random(200,300)),
                     Math.floor(random(100,500)),'#1','#1'));
 
-    var x = mapping.mapCurrent[[0]].length * mapping.caseWidth + ui.interfaceWidth;
-    var y = mapping.mapCurrent.length * mapping.caseHeight;
+    var x = 585 + ui.interfaceWidth;
+    var y = 585;
+    console.log(y);
     createCanvas(x,y);
     frameRate(60);
     loading = false;
@@ -68,7 +75,10 @@ function setup() {
 
 function draw() {
     noSmooth();
-    background(255,0,0);
+    background(10,0,0);
+    var translateCenterX = -bob.x - bob.w - (585/2) + 585;
+    var translateCenterY = -bob.y - bob.h - (585/2) + 585;
+    translate(translateCenterX, translateCenterY);
 
     mapping.display();
     entites.sort(sortByY);
@@ -105,6 +115,9 @@ function draw() {
             continue;
         }
     }
+
+    translate(-translateCenterX, -translateCenterY);
+
     ui.display();
 
     if(debug) {

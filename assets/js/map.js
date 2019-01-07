@@ -147,10 +147,6 @@ function MapGenerator() {
 
         // a la creation de la premiere map, si bob n'est pas défini alors on le place aléatoirement dans la map généré
         if(typeof bob === 'undefined') {
-            var joueurX = Math.floor(random(2,mapWidth-2));
-            var joueurY = Math.floor(random(2,mapHeight-2));
-            bob = new Bob('joueur',joueurX*30,joueurY*30);
-            entites.push(bob);
         }
 
         // ajout d'entites

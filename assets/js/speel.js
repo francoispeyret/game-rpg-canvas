@@ -29,21 +29,13 @@ function fireBol(direction,x,y) {
     this.color = [255,151,28];
 
     this.particles = [
-        new Particule(this.x, this.y, this.targetDirection,{
+        new Particule(this.x-3, this.y-5, this.targetDirection,{
                 r:this.color[0],
                 g:this.color[1],
                 b:this.color[2],
                 a: 255,
                 life: this.life,
-                vel: this.vel,
-            }),
-        new Particule(this.x, this.y, null,{
-                r:this.color[0],
-                g:this.color[1],
-                b:this.color[2],
-                a: 255,
-                life: this.life,
-                vel: this.vel,
+                vel: this.vel*0.99,
             }),
         new Particule(this.x, this.y, this.targetDirection,{
                 r:this.color[0],
@@ -52,6 +44,14 @@ function fireBol(direction,x,y) {
                 a: 255,
                 life: this.life,
                 vel: this.vel,
+            }),
+        new Particule(this.x+5, this.y-3, this.targetDirection,{
+                r:this.color[0],
+                g:this.color[1],
+                b:this.color[2],
+                a: 255,
+                life: this.life,
+                vel: this.vel*0.99,
             }),
     ];
 
@@ -62,7 +62,6 @@ function fireBol(direction,x,y) {
         rect(this.x,this.y,this.w,this.w);
         noStroke();
         for(i=0; this.particles.length > i; i++) {
-            // console.log(i);
             this.particles[i].update();
         }
         // ellipse(this.x,this.y,30);
